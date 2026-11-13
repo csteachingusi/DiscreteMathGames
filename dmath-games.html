@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Discrete Math Games: Trees and Graphs</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1d2433;--mute:#5d6678;--line:#d9deea;--acc:#3456d1;--acc2:#e9eefc;--good:#1f8a4c;--goodbg:#e6f6ec;--bad:#c0392b;--badbg:#fdecea;--warn:#b26a00;--op:#eef1ff;--sel:#f39c12}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#1d2433;color:#fff;padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+header h1{font-size:18px;margin:0 12px 0 0}
+header nav{display:flex;flex-wrap:wrap;gap:6px}
+header nav button{background:transparent;color:#cfd6e6;border:1px solid #3a4560;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:14px}
+header nav button.on{background:#fff;color:#1d2433}
+header .who{margin-left:auto;font-size:14px;color:#cfd6e6}
+main{max-width:1020px;margin:16px auto;padding:0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
+h2{margin:0 0 8px;font-size:20px}
+h3{margin:12px 0 6px;font-size:16px}
+button{font:inherit}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:7px;padding:7px 14px;cursor:pointer;margin:2px}
+.btn.sec{background:var(--acc2);color:var(--acc)}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:default}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;cursor:pointer}
+.tabs button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.bar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;color:var(--mute);font-size:14px;margin-bottom:8px}
+.pill{background:var(--acc2);color:var(--acc);border-radius:999px;padding:2px 10px;font-size:13px}
+.focus{background:#fff4e0;color:var(--warn)}
+.prompt{font-size:17px;margin:6px 0}
+.expr{font:600 22px/1.3 ui-monospace,Menlo,Consolas,monospace;background:#f2f4fa;border-radius:8px;padding:8px 12px;display:inline-block;margin:4px 0 10px;letter-spacing:.5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{min-width:40px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:#fff;font:600 18px ui-monospace,Menlo,monospace;cursor:pointer}
+.chip.opchip{background:var(--op)}
+.chip:disabled{opacity:.3;cursor:default}
+.svgwrap{overflow-x:auto;background:#fbfcff;border:1px solid var(--line);border-radius:8px;padding:6px;text-align:center}
+svg{max-width:100%;height:auto}
+svg text{font:600 16px ui-monospace,Menlo,monospace;pointer-events:none;user-select:none}
+.nd circle{fill:#fff;stroke:#7b86a0;stroke-width:2;cursor:pointer}
+.nd.op circle{fill:var(--op)}
+.nd.empty circle{fill:#fff;stroke-dasharray:4 3;stroke:#a7b0c4}
+.nd.empty text{fill:#a7b0c4}
+.nd.sel circle{stroke:var(--sel);stroke-width:4}
+.nd.picked circle{fill:#dfe7ff;stroke:var(--acc)}
+.nd.good circle{fill:var(--goodbg);stroke:var(--good);stroke-width:3}
+.nd.bad circle{fill:var(--badbg);stroke:var(--bad);stroke-width:3}
+.nd .badge{font-size:11px;fill:var(--acc)}
+.vx circle{fill:#fff;stroke:#7b86a0;stroke-width:2;cursor:pointer}
+.vx.visited circle{fill:var(--goodbg);stroke:var(--good)}
+.vx.cur circle{stroke:var(--sel);stroke-width:4}
+.vx.front circle{fill:#fff8e6}
+.vx.flash circle{fill:var(--badbg);stroke:var(--bad);stroke-width:3}
+.vx .badge,.vx .deg{font-size:11px}
+.vx .badge{fill:var(--good)}
+.vx .deg{fill:var(--mute)}
+line.e{stroke:#b4bccd;stroke-width:2.5}
+line.e.tree{stroke:var(--good);stroke-width:5}
+line.e.used{stroke:var(--acc);stroke-width:5}
+.etxt{font-size:11px!important;fill:var(--acc)}
+.fb{border-radius:8px;padding:8px 12px;margin:10px 0;display:none}
+.fb.good{display:block;background:var(--goodbg);color:var(--good)}
+.fb.bad{display:block;background:var(--badbg);color:var(--bad)}
+.fb.info{display:block;background:var(--acc2);color:var(--acc)}
+.cols{display:grid;grid-template-columns:minmax(0,2fr) minmax(220px,1fr);gap:14px}
+@media(max-width:760px){.cols{grid-template-columns:1fr}}
+.panel{background:#f7f8fc;border:1px solid var(--line);border-radius:8px;padding:10px}
+.ds{display:flex;flex-wrap:wrap;gap:4px;min-height:36px;align-items:center}
+.ds span{border:1px solid var(--line);background:#fff;border-radius:6px;padding:3px 9px;font:600 15px ui-monospace,monospace}
+.ds span.hot{border-color:var(--acc);background:var(--acc2)}
+.small{font-size:13px;color:var(--mute)}
+table.t{border-collapse:collapse;width:100%;font-size:14px;margin:6px 0}
+table.t th,table.t td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+table.t th{background:#f2f4fa}
+input[type=text],textarea,select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px}
+textarea{width:100%;min-height:140px;font:13px ui-monospace,monospace}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.gamecard{cursor:pointer}
+.gamecard:hover{border-color:var(--acc)}
+.choice{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.choice button.on{outline:3px solid var(--sel)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Discrete Math Games</h1>
+  <nav id="nav"></nav>
+  <div class="who" id="who"></div>
+</header>
+<main id="app"></main>
+<script>
+'use strict';
+/* =========================================================================
+   Discrete Math Games: expression trees, BFS vs DFS, Euler paths.
+   Every puzzle is produced by a generator and accepted only after a
+   validator passes (generate -> validate -> reject/repair loop). Each
+   student action is logged with an anonymous ID and a misconception code
+   (M1..M7, matching the pilot quiz). Data stays in this browser until the
+   student or instructor downloads it as CSV.
+   ========================================================================= */
+
+// ---------- small helpers ----------
+const $ = (q, r = document) => r.querySelector(q);
+function h(tag, attrs, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v === false || v == null) continue;
+    if (k === 'class') e.className = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v === true ? '' : v);
+  }
+  for (const k of kids.flat()) { if (k == null || k === false) continue; e.append(k.nodeType ? k : document.createTextNode(String(k))); }
+  return e;
+}
+const SVGNS = 'http://www.w3.org/2000/svg';
+function S(tag, attrs, ...kids) {
+  const e = document.createElementNS(SVGNS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null) continue;
+    if (k.startsWith('on')) e.addEventListener(k.slice(2), v); else e.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) { if (k == null) continue; e.append(k.nodeType ? k : document.createTextNode(String(k))); }
+  return e;
+}
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const uid = () => Math.random().toString(36).slice(2, 8);
+const arrEq = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
+const clone = o => JSON.parse(JSON.stringify(o));
+
+// ---------- misconception codes (shared with the pilot quiz) ----------
+const CODES = {
+  M1: 'Precedence', M2: 'Operand order / associativity', M3: 'Traversal order (prefix/infix/postfix)',
+  M4: 'BFS/DFS frontier (stack vs queue)', M5: 'Visited tracking (revisit/skip vertex or edge)',
+  M6: 'Euler condition (circuit vs path rule)', M7: 'Euler start vertex', OTHER: 'Other'
+};
+const SUB2CODE = {
+  'precedence': 'M1', 'associativity': 'M2', 'operand-order': 'M2', 'regrouped-equivalent': 'M2',
+  'prefix-postfix-confusion': 'M3', 'traversal-confusion': 'M3', 'right-before-left': 'M3', 'reversed-order': 'M3',
+  'dfs-like': 'M4', 'lifo-instead-of-fifo': 'M4', 'queue-order': 'M4', 'bfs-like': 'M4', 'backtrack-error': 'M4',
+  'revisit': 'M5', 'reused-edge': 'M5', 'not-an-edge': 'M5',
+  'circuit-rule-for-path': 'M6', 'circuit-vs-path': 'M6', 'missed-existence': 'M6', 'false-existence': 'M6',
+  'wrong-start-vertex': 'M7'
+};
+const codeOf = sub => SUB2CODE[sub] || 'OTHER';
+
+// ---------- state ----------
+const State = {
+  sid: localStorage.getItem('dmg_sid') || '',
+  consent: localStorage.getItem('dmg_consent') || '',
+  session: uid() + Date.now().toString(36).slice(-4),
+  page: 'home',
+  levels: (() => { try { return JSON.parse(localStorage.getItem('dmg_levels') || '{}'); } catch { return {}; } })(),
+  streak: {}, recentErr: {}, recent: {},
+  queue: { expr: [], bfsdfs: [], euler: [] }
+};
+function getLevel(g) { return State.levels[g] || 1; }
+function setLevel(g, v) { State.levels[g] = Math.max(1, Math.min(4, v)); localStorage.setItem('dmg_levels', JSON.stringify(State.levels)); }
+/* Adaptive difficulty: two clean solves in a row -> level up; two puzzles with 2+ errors -> level down. */
+function finishPuzzle(g, errors) {
+  const s = State.streak[g] || (State.streak[g] = { good: 0, bad: 0 });
+  if (errors === 0) { s.good++; s.bad = 0; if (s.good >= 2) { setLevel(g, getLevel(g) + 1); s.good = 0; return 'up'; } }
+  else if (errors >= 2) { s.bad++; s.good = 0; if (s.bad >= 2) { setLevel(g, getLevel(g) - 1); s.bad = 0; return 'down'; } }
+  else { s.good = 0; }
+  return '';
+}
+/* Just-in-time targeting: the most frequent fine-grained error among the last 6 in this game, if it appears 2+ times. */
+function noteError(g, sub) { const r = State.recentErr[g] || (State.recentErr[g] = []); r.push(sub); if (r.length > 6) r.shift(); }
+function focusFor(g, allowed) {
+  const r = State.recentErr[g] || []; const c = {};
+  for (const x of r) if (allowed.includes(x)) c[x] = (c[x] || 0) + 1;
+  let best = null; for (const [k, v] of Object.entries(c)) if (v >= 2 && (!best || v > c[best])) best = k;
+  return best;
+}
+function rememberKey(g, key) { const r = State.recent[g] || (State.recent[g] = []); r.push(key); if (r.length > 40) r.shift(); }
+const seenKey = (g, key) => (State.recent[g] || []).includes(key);
+
+// ---------- logging ----------
+const COLS = ['ts', 'student', 'consent', 'session', 'kind', 'game', 'mode', 'level', 'puzzle_id', 'source', 'focus', 'puzzle',
+  'attempt_no', 'correct', 'misconception', 'subtype', 'response', 'expected', 'time_ms', 'candidates', 'rejects', 'detail'];
+const LOGKEY = 'dmg_events_v1';
+const Log = {
+  all() { try { return JSON.parse(localStorage.getItem(LOGKEY) || '[]'); } catch { return []; } },
+  add(e) {
+    const all = this.all();
+    all.push({ ts: new Date().toISOString(), student: State.sid, consent: State.consent, session: State.session, ...e });
+    try { localStorage.setItem(LOGKEY, JSON.stringify(all)); } catch (err) { console.warn('log storage full', err); }
+  },
+  clear() { localStorage.removeItem(LOGKEY); }
+};
+function csvEsc(v) { v = v == null ? '' : String(v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+function toCSV(rows) { return [COLS.join(','), ...rows.map(r => COLS.map(c => csvEsc(r[c])).join(','))].join('\n'); }
+function parseCSV(text) {
+  const rows = []; let row = [], f = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"') { if (text[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
+    else if (c === '"') q = true;
+    else if (c === ',') { row.push(f); f = ''; }
+    else if (c === '\n') { row.push(f); rows.push(row); row = []; f = ''; }
+    else if (c !== '\r') f += c;
+  }
+  if (f !== '' || row.length) { row.push(f); rows.push(row); }
+  const head = rows.shift() || [];
+  return rows.filter(r => r.length > 1).map(r => Object.fromEntries(head.map((k, i) => [k, r[i] ?? ''])));
+}
+function download(name, text, type = 'text/csv') {
+  const a = h('a', { href: URL.createObjectURL(new Blob([text], { type })), download: name });
+  document.body.append(a); a.click(); setTimeout(() => a.remove(), 100);
+}
+/* One tracker per puzzle: logs every attempt with time since the puzzle appeared. */
+class Tracker {
+  constructor(game, mode, level, puzzle, source, focus) {
+    Object.assign(this, { game, mode, level, puzzle, source: source || 'generator', focus: focus || '', id: game[0] + '-' + uid(), n: 0, errors: 0, t0: performance.now(), done: false });
+  }
+  attempt(correct, sub, response, expected, detail) {
+    this.n++; if (!correct) { this.errors++; if (sub) noteError(this.game, sub); }
+    Log.add({ kind: 'attempt', game: this.game, mode: this.mode, level: this.level, puzzle_id: this.id, source: this.source, focus: this.focus,
+      puzzle: this.puzzle, attempt_no: this.n, correct: correct ? 1 : 0, misconception: correct ? '' : codeOf(sub), subtype: sub || '',
+      response, expected, time_ms: Math.round(performance.now() - this.t0), detail: detail || '' });
+  }
+  complete() { if (this.done) return ''; this.done = true; return finishPuzzle(this.game, this.errors); }
+  skip() { if (this.done) return; this.done = true; Log.add({ kind: 'skip', game: this.game, mode: this.mode, level: this.level, puzzle_id: this.id, source: this.source, puzzle: this.puzzle, attempt_no: this.n, time_ms: Math.round(performance.now() - this.t0) }); }
+}
+
+/* ---------- validated generation ----------
+   make() proposes a candidate; validate() returns a list of failed checks.
+   Rejected candidates are counted by reason and the loop repairs by re-proposing.
+   Each accepted puzzle logs a 'gen' row with candidates tried and rejection reasons. */
+function generate(game, mode, level, focus, make, validate, max = 600) {
+  const rejects = {}; let n = 0;
+  while (n < max) {
+    n++;
+    let c, reasons;
+    try { c = make(); reasons = c ? validate(c) : ['no-candidate']; } catch (err) { reasons = ['exception:' + err.message]; }
+    if (!reasons.length) {
+      Log.add({ kind: 'gen', game, mode, level, source: 'generator', focus: focus || '', correct: 1, candidates: n, rejects: fmtRejects(rejects) });
+      return c;
+    }
+    for (const r of reasons) rejects[r] = (rejects[r] || 0) + 1;
+  }
+  Log.add({ kind: 'gen', game, mode, level, source: 'generator', focus: focus || '', correct: 0, candidates: n, rejects: fmtRejects(rejects), detail: 'gave up' });
+  return null;
+}
+const fmtRejects = r => Object.entries(r).map(([k, v]) => k + ':' + v).join('|');
+
+/* =========================================================================
+   EXPRESSION TREES
+   ========================================================================= */
+const OPS = { '+': { p: 1, c: 1 }, '-': { p: 1, c: 0 }, '*': { p: 2, c: 1 }, '/': { p: 2, c: 0 }, '^': { p: 3, c: 0, r: 1 } };
+const isOp = t => Object.prototype.hasOwnProperty.call(OPS, t);
+const leafOK = v => typeof v === 'string' && /^([A-Za-z]|\d+)$/.test(v);
+function eq(a, b) {
+  if (!a || !b || a.empty || b.empty) return false;
+  if (a.op || b.op) return a.op === b.op && eq(a.l, b.l) && eq(a.r, b.r);
+  return a.v === b.v;
+}
+const pre = n => n.empty ? ['?'] : n.op ? [n.op, ...pre(n.l), ...pre(n.r)] : [n.v];
+const post = n => n.empty ? ['?'] : n.op ? [...post(n.l), ...post(n.r), n.op] : [n.v];
+const inord = n => n.empty ? ['?'] : n.op ? [...inord(n.l), n.op, ...inord(n.r)] : [n.v];
+const nodesOf = n => n.op ? [n, ...nodesOf(n.l), ...nodesOf(n.r)] : [n];
+const opCount = n => n.op ? 1 + opCount(n.l) + opCount(n.r) : 0;
+const hasEmpty = n => !!(n.empty || (n.op && (hasEmpty(n.l) || hasEmpty(n.r))));
+/* Infix with the minimum parentheses needed (or fully parenthesized). */
+function infix(n, full = false, pp = 0, side = '', pop = '') {
+  if (!n.op) return n.v;
+  const p = OPS[n.op].p;
+  const body = infix(n.l, full, p, 'L', n.op) + ' ' + n.op + ' ' + infix(n.r, full, p, 'R', n.op);
+  if (!pop) return body;
+  const need = full || p < pp || (p === pp && (OPS[pop].r ? side === 'L' : side === 'R'));
+  return need ? '(' + body + ')' : body;
+}
+function tokenize(str) {
+  str = String(str).replace(/[×·]/g, '*').replace(/÷/g, '/').replace(/↑/g, '^').replace(/[−–]/g, '-');
+  const toks = str.match(/[A-Za-z]|\d+|[-+*/^()]/g) || [];
+  if (toks.join('') !== str.replace(/\s+/g, '')) throw Error('unknown symbol');
+  return toks;
+}
+/* Shunting-yard. mode 'std' = real rules; 'flat' = ignore precedence (left to right);
+   'rassoc' = group same-level operators from the right. The last two model misconceptions. */
+function parseInfix(str, mode = 'std') {
+  const toks = tokenize(str), out = [], ops = [];
+  const prec = o => mode === 'flat' ? 1 : OPS[o].p;
+  const right = o => mode === 'rassoc' ? true : mode === 'flat' ? false : !!OPS[o].r;
+  const reduce = () => { const o = ops.pop(), r = out.pop(), l = out.pop(); if (!l || !r) throw Error('missing operand'); out.push({ op: o, l, r }); };
+  let expectOperand = true;
+  for (const t of toks) {
+    if (t === '(') { if (!expectOperand) throw Error('unexpected ('); ops.push(t); }
+    else if (t === ')') { if (expectOperand) throw Error('unexpected )'); while (ops.length && ops.at(-1) !== '(') reduce(); if (!ops.length) throw Error('unbalanced )'); ops.pop(); }
+    else if (isOp(t)) {
+      if (expectOperand) throw Error('unexpected operator ' + t);
+      while (ops.length && ops.at(-1) !== '(' && (prec(ops.at(-1)) > prec(t) || (prec(ops.at(-1)) === prec(t) && !right(t)))) reduce();
+      ops.push(t); expectOperand = true;
+    } else { if (!expectOperand) throw Error('missing operator'); out.push({ v: t }); expectOperand = false; }
+  }
+  if (expectOperand) throw Error('ends with operator');
+  while (ops.length) { if (ops.at(-1) === '(') throw Error('unbalanced ('); reduce(); }
+  if (out.length !== 1) throw Error('malformed');
+  return out[0];
+}
+function parsePrefix(toks) {
+  toks = typeof toks === 'string' ? tokenize(toks) : toks; let i = 0;
+  const go = () => { if (i >= toks.length) throw Error('too few operands'); const t = toks[i++]; if (isOp(t)) { const l = go(); return { op: t, l, r: go() }; } if (!leafOK(t)) throw Error('bad token'); return { v: t }; };
+  const t = go(); if (i !== toks.length) throw Error('extra tokens'); return t;
+}
+function parsePostfix(toks) {
+  toks = typeof toks === 'string' ? tokenize(toks) : toks; const st = [];
+  for (const t of toks) { if (isOp(t)) { const r = st.pop(), l = st.pop(); if (!l || !r) throw Error('too few operands'); st.push({ op: t, l, r }); } else if (leafOK(t)) st.push({ v: t }); else throw Error('bad token'); }
+  if (st.length !== 1) throw Error('extra operands'); return st[0];
+}
+function checkStructure(n) {
+  if (!n) return false;
+  if (n.op !== undefined) return isOp(n.op) && !!n.l && !!n.r && n.v === undefined && checkStructure(n.l) && checkStructure(n.r);
+  return leafOK(n.v);
+}
+function evalReal(n, env) {
+  if (!n.op) return /^\d+$/.test(n.v) ? +n.v : env[n.v];
+  const a = evalReal(n.l, env), b = evalReal(n.r, env);
+  switch (n.op) { case '+': return a + b; case '-': return a - b; case '*': return a * b; case '/': return a / b; case '^': return Math.pow(a, b); }
+}
+/* Strict integer evaluation for "evaluate" puzzles; throws on non-integer or oversized values. */
+function evalInt(n) {
+  if (!n.op) return +n.v;
+  const a = evalInt(n.l), b = evalInt(n.r); let v;
+  if (n.op === '/') { if (b === 0) throw Error('div-zero'); if (a % b !== 0) throw Error('non-integer'); v = a / b; }
+  else if (n.op === '^') { if (b < 0 || b > 3 || Math.abs(a) > 12) throw Error('too-large'); v = Math.pow(a, b); }
+  else v = n.op === '+' ? a + b : n.op === '-' ? a - b : a * b;
+  if (Math.abs(v) > 500) throw Error('too-large');
+  return v;
+}
+/* Value-equivalence by random testing (12 assignments; needs 3+ finite agreements). */
+function equivalent(a, b) {
+  const vars = [...new Set(nodesOf(a).concat(nodesOf(b)).filter(n => !n.op && /[A-Za-z]/.test(n.v)).map(n => n.v))];
+  let finite = 0;
+  for (let k = 0; k < 12; k++) {
+    const env = Object.fromEntries(vars.map(v => [v, 1.1 + 1.5 * Math.random()]));
+    const x = evalReal(a, env), y = evalReal(b, env);
+    if (!isFinite(x) || !isFinite(y)) { if (isFinite(x) !== isFinite(y)) return false; continue; }
+    finite++;
+    if (Math.abs(x - y) > 1e-9 * Math.max(1, Math.abs(x))) return false;
+  }
+  return finite >= 3;
+}
+/* 0 = identical, 1 = equal up to swaps at + or *, 2 = needs a swap at - / ^, -1 = not swap-equivalent */
+function swapKind(a, b) {
+  if (!a.op || !b.op) return (!a.op && !b.op && a.v === b.v) ? 0 : -1;
+  if (a.op !== b.op) return -1;
+  let best = -1;
+  const s1 = swapKind(a.l, b.l), s2 = swapKind(a.r, b.r); if (s1 >= 0 && s2 >= 0) best = Math.max(s1, s2);
+  const c1 = swapKind(a.l, b.r), c2 = swapKind(a.r, b.l);
+  if (c1 >= 0 && c2 >= 0) { const k = Math.max(c1, c2, OPS[a.op].c ? 1 : 2); if (best < 0 || k < best) best = k; }
+  return best;
+}
+const mirror = n => n.op ? { op: n.op, l: mirror(n.r), r: mirror(n.l) } : { v: n.v };
+/* Top-most node of b where b differs from a (the "error location"). */
+function topDiff(a, b) {
+  if (!a.op || !b.op || a.op !== b.op) return b;
+  const dl = !eq(a.l, b.l), dr = !eq(a.r, b.r);
+  if (dl && dr) return b; if (dl) return topDiff(a.l, b.l); if (dr) return topDiff(a.r, b.r); return null;
+}
+const EXPR_LEVELS = {
+  1: { ops: [2, 2], set: '+-*', full: true },
+  2: { ops: [3, 3], set: '+-*/', full: false },
+  3: { ops: [4, 4], set: '+-*/^', full: false },
+  4: { ops: [5, 6], set: '+-*/^', full: false }
+};
+function randExprTree(nOps, set, labelFn) {
+  const ops = set.split('');
+  const t = (function g(n) { if (!n) return { v: '?' }; const k = ri(0, n - 1); return { op: pick(ops), l: g(k), r: g(n - 1 - k) }; })(nOps);
+  const leaves = nodesOf(t).filter(n => !n.op); const labs = labelFn(leaves.length);
+  leaves.forEach((n, i) => n.v = labs[i]); return t;
+}
+const letterLabels = k => shuffle('abcdefgh'.split('')).slice(0, k);
+const digitLabels = k => Array.from({ length: k }, () => String(ri(1, 9)));
+/* Core validity checks every expression puzzle must pass: tree invariants, exact round trips. */
+function exprCoreChecks(t, full) {
+  const r = [];
+  if (!checkStructure(t)) { r.push('invalid-structure'); return r; }
+  try { if (!eq(parseInfix(infix(t, full)), t)) r.push('infix-roundtrip'); } catch { r.push('infix-roundtrip'); }
+  try { if (!eq(parsePrefix(pre(t)), t)) r.push('prefix-roundtrip'); } catch { r.push('prefix-roundtrip'); }
+  try { if (!eq(parsePostfix(post(t)), t)) r.push('postfix-roundtrip'); } catch { r.push('postfix-roundtrip'); }
+  return r;
+}
+const hasNonCommDistinct = t => nodesOf(t).some(n => n.op && !OPS[n.op].c && !eq(n.l, n.r));
+function flatDiffers(t) { try { return !eq(parseInfix(infix(t), 'flat'), t); } catch { return false; } }
+function rassocDiffers(t) { try { return !eq(parseInfix(infix(t), 'rassoc'), t); } catch { return false; } }
+
+function makeExprPuzzle(mode, fmtPref) {
+  const level = getLevel('expr'), L = EXPR_LEVELS[level];
+  const q = State.queue.expr.findIndex(p => (p.mode || 'build') === mode);
+  if (q >= 0) { const p = State.queue.expr.splice(q, 1)[0]; return fromPackExpr(p, level); }
+  const focusable = { build: ['precedence', 'associativity', 'operand-order', 'prefix-postfix-confusion'], traverse: ['traversal-confusion', 'right-before-left', 'reversed-order'],
+    spot: ['precedence', 'associativity', 'operand-order'], evaluate: ['precedence', 'associativity', 'operand-order'] }[mode];
+  const focus = focusFor('expr', focusable);
+  let P = null;
+  const nOps = () => ri(L.ops[0], L.ops[1]);
+  if (mode === 'build') {
+    let fmt = fmtPref === 'mixed' ? pick(['infix', 'infix', 'prefix', 'postfix']) : fmtPref;
+    if (fmtPref === 'mixed' && focus === 'prefix-postfix-confusion') fmt = pick(['prefix', 'postfix']);
+    if (fmtPref === 'mixed' && (focus === 'precedence' || focus === 'associativity')) fmt = 'infix';
+    const full = L.full && !focus;
+    const t = generate('expr', mode, level, focus, () => randExprTree(nOps(), L.set, letterLabels), t => {
+      const r = exprCoreChecks(t, full);
+      if (fmt === 'infix' && !full && !flatDiffers(t) && !rassocDiffers(t)) r.push('precedence-irrelevant');
+      if (focus === 'precedence' && !flatDiffers(t)) r.push('focus-unmet');
+      if (focus === 'associativity' && !rassocDiffers(t)) r.push('focus-unmet');
+      if (focus === 'operand-order' && !hasNonCommDistinct(t)) r.push('focus-unmet');
+      if (seenKey('expr', infix(t))) r.push('duplicate');
+      return r;
+    });
+    if (!t) return null;
+    const src = fmt === 'infix' ? infix(t, full) : (fmt === 'prefix' ? pre(t) : post(t)).join(' ');
+    P = { mode, fmt, tree: t, src, focus, level };
+  } else if (mode === 'traverse') {
+    const order = focus ? pick(['preorder', 'postorder']) : pick(['preorder', 'inorder', 'postorder']);
+    const t = generate('expr', mode, level, focus, () => randExprTree(Math.max(3, nOps()), L.set, letterLabels), t => {
+      const r = exprCoreChecks(t, false); if (seenKey('expr', infix(t))) r.push('duplicate'); return r;
+    });
+    if (!t) return null;
+    P = { mode, order, tree: t, focus, level };
+  } else if (mode === 'spot') {
+    const set = L.set.length < 4 ? '+-*/' : L.set;
+    let mtype;
+    const t = generate('expr', mode, level, focus, () => {
+      const t = randExprTree(Math.max(3, nOps()), set, letterLabels);
+      mtype = focus && ['precedence', 'associativity', 'operand-order'].includes(focus) ? focus : pick(['precedence', 'associativity', 'operand-order', 'wrong-operator']);
+      t._m = mutateExpr(t, mtype, set); return t;
+    }, t => {
+      const r = exprCoreChecks(t, false), m = t._m;
+      if (!m) { r.push('mutation-impossible'); return r; }
+      if (eq(m, t)) r.push('mutation-noop');
+      else if (equivalent(m, t)) r.push('mutation-equivalent');
+      else if (!topDiff(t, m)) r.push('no-error-node');
+      if (seenKey('expr', infix(t))) r.push('duplicate');
+      return r;
+    });
+    if (!t) return null;
+    const wrong = t._m; delete t._m;
+    P = { mode, tree: t, wrong, mtype, errNode: topDiff(t, wrong), src: infix(t), focus, level };
+  } else if (mode === 'evaluate') {
+    const fmt = focus === 'operand-order' ? pick(['prefix', 'postfix']) : focus ? 'infix' : pick(['infix', 'prefix', 'postfix']);
+    const set = level >= 4 ? '+-*/^' : level >= 3 ? '+-*/' : '+-*';
+    const t = generate('expr', mode, level, focus, () => randExprTree(Math.max(2, Math.min(nOps(), 5)), set, digitLabels), t => {
+      const r = exprCoreChecks(t, false); if (r.length) return r;
+      let val; try { val = evalInt(t); } catch (e) { r.push(e.message); return r; }
+      if (fmt === 'infix' && !flatDiffers(t) && !rassocDiffers(t)) r.push('non-discriminating');
+      if (fmt === 'infix') { const alts = altInfixValues(t); if (alts.every(a => a === val)) r.push('non-discriminating'); }
+      if (fmt !== 'infix' && evalReal(mirror(t), {}) === val) r.push('non-discriminating');
+      if (focus === 'precedence' && !flatDiffers(t)) r.push('focus-unmet');
+      if (focus === 'associativity' && !rassocDiffers(t)) r.push('focus-unmet');
+      if (seenKey('expr', infix(t))) r.push('duplicate');
+      return r;
+    });
+    if (!t) return null;
+    const src = fmt === 'infix' ? infix(t) : (fmt === 'prefix' ? pre(t) : post(t)).join(' ');
+    P = { mode, fmt, tree: t, src, value: evalInt(t), focus, level };
+  }
+  rememberKey('expr', infix(P.tree));
+  return P;
+}
+function altInfixValues(t) { const s = infix(t), out = []; for (const m of ['flat', 'rassoc']) { try { out.push(evalReal(parseInfix(s, m), {})); } catch { } } return out; }
+function mutateExpr(t, type, set) {
+  const src = infix(t);
+  if (type === 'precedence') return parseInfix(src, 'flat');
+  if (type === 'associativity') return parseInfix(src, 'rassoc');
+  const m = clone(t); const internals = nodesOf(m).filter(n => n.op);
+  if (type === 'operand-order') { const c = internals.filter(n => !OPS[n.op].c && !eq(n.l, n.r)); if (!c.length) return null; const n = pick(c); [n.l, n.r] = [n.r, n.l]; return m; }
+  if (type === 'wrong-operator') { const n = pick(internals); n.op = pick(set.split('').filter(o => o !== n.op)); return m; }
+  return null;
+}
+function fromPackExpr(p, level) {
+  const t = parseInfix(p.infix); const mode = p.mode || 'build';
+  if (mode === 'build') { const fmt = p.format || 'infix'; return { mode, fmt, tree: t, src: fmt === 'infix' ? p.infix : (fmt === 'prefix' ? pre(t) : post(t)).join(' '), level, source: 'pack' }; }
+  if (mode === 'traverse') return { mode, order: p.order || 'preorder', tree: t, level, source: 'pack' };
+  if (mode === 'evaluate') { const fmt = p.format || 'postfix'; return { mode, fmt, tree: t, src: fmt === 'infix' ? p.infix : (fmt === 'prefix' ? pre(t) : post(t)).join(' '), value: evalInt(t), level, source: 'pack' }; }
+  return null;
+}
+
+/* ---- diagnosis: map a student answer to a misconception subtype ---- */
+function diagnoseBuild(student, P) {
+  if (hasEmpty(student)) return { ok: false, sub: 'incomplete' };
+  if (eq(student, P.tree)) return { ok: true };
+  const k = swapKind(student, P.tree);
+  if (k === 1) return { ok: true, sub: 'commutative-swap' };
+  if (P.fmt === 'infix') {
+    try { if (eq(student, parseInfix(P.src, 'flat'))) return { ok: false, sub: 'precedence' }; } catch { }
+    try { if (eq(student, parseInfix(P.src, 'rassoc'))) return { ok: false, sub: 'associativity' }; } catch { }
+  }
+  const toks = P.src.split(' ');
+  if (P.fmt === 'prefix' && arrEq(post(student), toks)) return { ok: false, sub: 'prefix-postfix-confusion' };
+  if (P.fmt === 'postfix' && arrEq(pre(student), toks)) return { ok: false, sub: 'prefix-postfix-confusion' };
+  if (k === 2) return { ok: false, sub: 'operand-order' };
+  if (equivalent(student, P.tree)) return { ok: false, sub: 'regrouped-equivalent' };
+  return { ok: false, sub: 'structure-other' };
+}
+function diagnoseEval(ans, P) {
+  if (ans === P.value) return { ok: true };
+  const close = v => isFinite(v) && Math.abs(v - ans) < 1e-9;
+  if (P.fmt === 'infix') {
+    try { if (close(evalReal(parseInfix(P.src, 'flat'), {}))) return { ok: false, sub: 'precedence' }; } catch { }
+    try { if (close(evalReal(parseInfix(P.src, 'rassoc'), {}))) return { ok: false, sub: 'associativity' }; } catch { }
+  } else {
+    if (close(evalReal(mirror(P.tree), {}))) return { ok: false, sub: 'operand-order' };
+    const t = clone(P.tree);
+    for (const n of nodesOf(t).filter(n => n.op && !OPS[n.op].c)) { [n.l, n.r] = [n.r, n.l]; const v = evalReal(t, {}); [n.l, n.r] = [n.r, n.l]; if (close(v)) return { ok: false, sub: 'operand-order' }; }
+    try { const other = P.fmt === 'prefix' ? parsePostfix(P.src) : parsePrefix(P.src); if (close(evalReal(other, {}))) return { ok: false, sub: 'prefix-postfix-confusion' }; } catch { }
+    try { const rev = P.src.split(' ').reverse(); const other = P.fmt === 'prefix' ? parsePostfix(rev) : parsePrefix(rev); if (close(evalReal(other, {}))) return { ok: false, sub: 'operand-order' }; } catch { }
+  }
+  return { ok: false, sub: 'arithmetic-or-other' };
+}
+const TRAV = {
+  preorder: n => n.op ? [n, ...TRAV.preorder(n.l), ...TRAV.preorder(n.r)] : [n],
+  inorder: n => n.op ? [...TRAV.inorder(n.l), n, ...TRAV.inorder(n.r)] : [n],
+  postorder: n => n.op ? [...TRAV.postorder(n.l), ...TRAV.postorder(n.r), n] : [n]
+};
+const travMirror = (k, n) => k === 'preorder' ? (n.op ? [n, ...travMirror(k, n.r), ...travMirror(k, n.l)] : [n]) : k === 'inorder' ? (n.op ? [...travMirror(k, n.r), n, ...travMirror(k, n.l)] : [n]) : (n.op ? [...travMirror(k, n.r), ...travMirror(k, n.l), n] : [n]);
+function diagnoseTraversal(seq, P) {
+  const want = TRAV[P.order](P.tree);
+  if (arrEq(seq, want)) return { ok: true };
+  for (const k of ['preorder', 'inorder', 'postorder']) if (k !== P.order && arrEq(seq, TRAV[k](P.tree))) return { ok: false, sub: 'traversal-confusion', detail: 'gave ' + k };
+  if (arrEq(seq, travMirror(P.order, P.tree))) return { ok: false, sub: 'right-before-left' };
+  if (arrEq(seq, want.slice().reverse())) return { ok: false, sub: 'reversed-order' };
+  const i = seq.findIndex((x, j) => x !== want[j]);
+  return { ok: false, sub: 'traversal-other', detail: 'first mismatch at position ' + (i + 1) };
+}
+const MSG = {
+  'precedence': 'Your answer treats the operators strictly left to right. Remember: ^ binds tightest, then * and /, then + and -.',
+  'associativity': 'Check the grouping of operators with the same precedence: a - b - c means (a - b) - c. Only ^ groups from the right.',
+  'operand-order': 'The pieces are right, but a left and right operand are swapped. For -, / and ^ the order matters.',
+  'regrouped-equivalent': 'Your tree gives the same value, but it groups the operations differently from how the expression is written.',
+  'prefix-postfix-confusion': 'It looks like you read the expression in the other notation. Prefix puts each operator before its operands; postfix puts it after.',
+  'structure-other': 'The tree does not match the expression yet. Try reading your tree back out and compare.',
+  'incomplete': 'Fill every ? slot first.',
+  'commutative-swap': 'Correct value! You swapped the operands of a + or *. That is fine mathematically, but convention keeps the left operand on the left.',
+  'traversal-confusion': 'That is a different traversal order. Preorder: node, left, right. Inorder: left, node, right. Postorder: left, right, node.',
+  'right-before-left': 'You visited right subtrees before left subtrees. Always go left first.',
+  'reversed-order': 'That is the requested order backwards.',
+  'traversal-other': 'Not quite. Trace the recursion: finish the whole left subtree before moving right.',
+  'arithmetic-or-other': 'Not quite. Work one operator at a time and write down intermediate results.',
+  'mislocated': 'The kind of error is right, but look again at where in the tree it happens.',
+  'wrong-type': 'That is not the kind of error in this tree.'
+};
+
+/* =========================================================================
+   SVG rendering
+   ========================================================================= */
+function layoutTree(t) {
+  let x = 0, md = 0; const list = [];
+  (function f(n, d) { if (n.op) f(n.l, d + 1); n._x = x++; n._d = d; md = Math.max(md, d); list.push(n); if (n.op) f(n.r, d + 1); })(t, 0);
+  return { list, w: x, h: md + 1 };
+}
+function drawTree(t, { cls, label, onNode, badge } = {}) {
+  const L = layoutTree(t), DX = 54, DY = 66, R = 20;
+  const W = Math.max(L.w * DX, 220), H = L.h * DY + 16, off = (W - L.w * DX) / 2;
+  const cx = n => off + n._x * DX + DX / 2, cy = n => n._d * DY + R + 8;
+  const svg = S('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H });
+  for (const n of L.list) if (n.op) for (const c of [n.l, n.r]) svg.append(S('line', { x1: cx(n), y1: cy(n), x2: cx(c), y2: cy(c), stroke: '#9aa3b8', 'stroke-width': 2 }));
+  for (const n of L.list) {
+    const g = S('g', { class: 'nd ' + (n.empty ? 'empty' : n.op ? 'op' : 'leaf') + ' ' + (cls ? cls(n) : ''), onclick: onNode ? () => onNode(n) : null });
+    g.append(S('circle', { cx: cx(n), cy: cy(n), r: R }), S('text', { x: cx(n), y: cy(n) + 6, 'text-anchor': 'middle' }, label ? label(n) : (n.empty ? '?' : n.op || n.v)));
+    const b = badge && badge(n); if (b) g.append(S('text', { class: 'badge', x: cx(n) + R - 2, y: cy(n) - R + 4 }, b));
+    svg.append(g);
+  }
+  return h('div', { class: 'svgwrap' }, svg);
+}
+const ekey = (u, v) => u < v ? u + '|' + v : v + '|' + u;
+function drawGraph(G, { vcls, onV, ecls, badge, deg, elabel } = {}) {
+  const svg = S('svg', { viewBox: `0 0 ${G.W} ${G.H}`, width: G.W, height: G.H });
+  for (const [u, v] of G.E) {
+    const [x1, y1] = G.pos[u], [x2, y2] = G.pos[v];
+    svg.append(S('line', { class: 'e ' + (ecls ? ecls(u, v) : ''), x1, y1, x2, y2 }));
+    const lab = elabel && elabel(u, v);
+    if (lab) svg.append(S('text', { class: 'etxt', x: (x1 + x2) / 2 + 5, y: (y1 + y2) / 2 - 5 }, lab));
+  }
+  for (const v of G.V) {
+    const [x, y] = G.pos[v];
+    const g = S('g', { class: 'vx ' + (vcls ? vcls(v) : ''), onclick: onV ? () => onV(v) : null });
+    g.append(S('circle', { cx: x, cy: y, r: 19 }), S('text', { x, y: y + 6, 'text-anchor': 'middle' }, v));
+    const b = badge && badge(v); if (b) g.append(S('text', { class: 'badge', x: x + 15, y: y - 16 }, b));
+    if (deg) g.append(S('text', { class: 'deg', x: x - 30, y: y + 30 }, 'deg ' + degreeOf(G, v)));
+    svg.append(g);
+  }
+  return h('div', { class: 'svgwrap' }, svg);
+}
+
+/* =========================================================================
+   GRAPHS
+   ========================================================================= */
+function adjOf(G) { const A = Object.fromEntries(G.V.map(v => [v, []])); for (const [u, v] of G.E) { A[u].push(v); A[v].push(u); } for (const v of G.V) A[v].sort(); return A; }
+const degreeOf = (G, v) => G.E.filter(e => e[0] === v || e[1] === v).length;
+function connected(G) {
+  if (!G.V.length) return false; const A = adjOf(G), seen = new Set([G.V[0]]), st = [G.V[0]];
+  while (st.length) for (const w of A[st.pop()]) if (!seen.has(w)) { seen.add(w); st.push(w); }
+  return seen.size === G.V.length;
+}
+/* Random near-planar graph on a jittered 3x4 grid: spanning tree + extra edges. */
+function randGraph(n, extraP) {
+  const ROWS = 3, COLS = 4, cells = shuffle([...Array(ROWS * COLS).keys()]).slice(0, n);
+  const rc = c => [Math.floor(c / COLS), c % COLS], chosen = new Set(cells);
+  const cand = [];
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+    const [r1, c1] = rc(cells[i]), [r2, c2] = rc(cells[j]), dr = Math.abs(r1 - r2), dc = Math.abs(c1 - c2);
+    if (Math.max(dr, dc) === 1) cand.push([i, j, dr && dc]);
+    else if ((dr === 0 && dc === 2) || (dc === 0 && dr === 2)) { const mid = ((r1 + r2) / 2) * COLS + (c1 + c2) / 2; if (!chosen.has(mid)) cand.push([i, j, 0]); }
+  }
+  // drop one of any pair of crossing diagonals
+  const diag = cand.filter(e => e[2]), keep = new Set(cand);
+  for (const a of diag) for (const b of diag) if (a !== b && keep.has(a) && keep.has(b)) {
+    const [ra1, ca1] = rc(cells[a[0]]), [ra2, ca2] = rc(cells[a[1]]), [rb1, cb1] = rc(cells[b[0]]), [rb2, cb2] = rc(cells[b[1]]);
+    if (Math.min(ra1, ra2) === Math.min(rb1, rb2) && Math.min(ca1, ca2) === Math.min(cb1, cb2)) keep.delete(Math.random() < .5 ? a : b);
+  }
+  const edges = shuffle([...keep]);
+  const parent = [...Array(n).keys()], find = x => parent[x] === x ? x : (parent[x] = find(parent[x]));
+  const E = [];
+  for (const e of edges) { const a = find(e[0]), b = find(e[1]); if (a !== b) { parent[a] = b; E.push(e); } }
+  for (const e of edges) if (!E.includes(e) && Math.random() < extraP) E.push(e);
+  const labels = shuffle('ABCDEFGHIJ'.split('').slice(0, n));
+  const pos = {};
+  cells.forEach((c, i) => { const [r, cc] = rc(c); pos[labels[i]] = [70 + cc * 125 + ri(-16, 16), 50 + r * 105 + ri(-12, 12)]; });
+  return { V: labels.slice().sort(), E: E.map(([i, j]) => [labels[i], labels[j]].sort()), pos, W: 520, H: 290 };
+}
+function circleLayout(G) {
+  const n = G.V.length, pos = {};
+  G.V.forEach((v, i) => { const a = -Math.PI / 2 + 2 * Math.PI * i / n; pos[v] = [260 + 200 * Math.cos(a), 150 + 120 * Math.sin(a)]; });
+  return { ...G, pos, W: 520, H: 300 };
+}
+/* Step-by-step simulations that record the frontier before every visit. */
+function simBFS(G, s) {
+  const A = adjOf(G), seen = new Set([s]), q = [s], order = [], steps = [], parent = {}, enq = {};
+  while (q.length) {
+    steps.push({ frontier: q.slice() });
+    const u = q.shift(); order.push(u);
+    for (const w of A[u]) if (!seen.has(w)) { seen.add(w); q.push(w); parent[w] = u; }
+  }
+  return { order, steps, parent };
+}
+function simDFS(G, s) {
+  const A = adjOf(G), visited = new Set([s]), path = [s], order = [s], steps = [{ frontier: [] }], parent = {};
+  while (path.length) {
+    const top = path.at(-1), w = A[top].find(x => !visited.has(x));
+    if (w) { steps.push({ frontier: path.slice() }); visited.add(w); parent[w] = top; path.push(w); order.push(w); }
+    else path.pop();
+  }
+  return { order, steps, parent };
+}
+function decisionCount(G, s) {
+  const A = adjOf(G); let d = 0;
+  const b = simBFS(G, s); b.steps.forEach(st => { if (st.frontier.length >= 2) d++; });
+  const D = simDFS(G, s);
+  const vis = new Set(); for (const v of D.order) { vis.add(v); if (A[v].filter(x => !vis.has(x)).length >= 2) d++; }
+  return d;
+}
+function validateBfsDfsGraph(G, s) {
+  const r = [];
+  const vs = new Set(G.V); if (vs.size !== G.V.length) r.push('duplicate-vertex');
+  const ek = new Set();
+  for (const [u, v] of G.E) { if (!vs.has(u) || !vs.has(v)) r.push('unknown-vertex'); if (u === v) r.push('self-loop'); const k = ekey(u, v); if (ek.has(k)) r.push('multi-edge'); ek.add(k); }
+  if (r.length) return r;
+  if (!vs.has(s)) r.push('bad-start');
+  if (!connected(G)) r.push('disconnected');
+  if (r.length) return r;
+  if (arrEq(simBFS(G, s).order, simDFS(G, s).order)) r.push('bfs-equals-dfs');
+  if (decisionCount(G, s) < 3) r.push('too-few-decisions');
+  return r;
+}
+const GRAPH_LEVELS = { 1: { n: 6, p: .25, frontier: true }, 2: { n: 8, p: .25, frontier: true }, 3: { n: 9, p: .3, frontier: true }, 4: { n: 10, p: .3, frontier: false } };
+function makeBfsDfsPuzzle(algoPref) {
+  const level = getLevel('bfsdfs'), L = GRAPH_LEVELS[level];
+  let algo = algoPref === 'mixed' ? pick(['bfs', 'dfs']) : algoPref;
+  const focus = focusFor('bfsdfs', ['dfs-like', 'bfs-like', 'lifo-instead-of-fifo', 'backtrack-error', 'revisit']);
+  if (algoPref === 'mixed' && (focus === 'dfs-like' || focus === 'lifo-instead-of-fifo')) algo = 'bfs';
+  if (algoPref === 'mixed' && (focus === 'bfs-like' || focus === 'backtrack-error')) algo = 'dfs';
+  const qi = State.queue.bfsdfs.findIndex(() => true);
+  if (qi >= 0) { const p = State.queue.bfsdfs.splice(qi, 1)[0]; const G = circleLayout({ V: p.vertices.slice().sort(), E: p.edges.map(e => e.slice().sort()) }); return { G, s: p.start, algo: p.algo || algo, level, frontierShown: L.frontier, source: 'pack' }; }
+  let s;
+  const G = generate('bfsdfs', algo, level, focus, () => { const G = randGraph(L.n, L.p); s = pick(G.V); return G; }, G => {
+    const r = validateBfsDfsGraph(G, s);
+    if (G.E.length < G.V.length) r.push('too-sparse');
+    if (focus === 'backtrack-error' && !needsBacktrack(G, s)) r.push('focus-unmet');
+    const key = s + ':' + G.E.map(e => e.join('')).sort().join(',');
+    if (seenKey('bfsdfs', key)) r.push('duplicate');
+    return r;
+  });
+  if (!G) return null;
+  return { G, s, algo, level, frontierShown: L.frontier, focus };
+}
+function needsBacktrack(G, s) { const D = simDFS(G, s); return D.steps.slice(1).some((st, i) => st.frontier.at(-1) !== D.order[i]); }
+function diagnoseGraphClick(v, P, k, visitedSet) {
+  const step = P.sim.steps[k], expected = P.sim.order[k], A = P.A;
+  if (visitedSet.has(v)) return 'revisit';
+  if (P.algo === 'bfs') {
+    const Q = step.frontier, last = P.sim.order[k - 1];
+    if (Q.includes(v)) {
+      if (P.sim.parent[v] === P.sim.parent[expected] && v > expected) return 'tie-break';
+      if (A[last] && A[last].includes(v) && P.sim.parent[v] === last) return 'dfs-like';
+      if (v === Q.at(-1)) return 'lifo-instead-of-fifo';
+      return 'queue-order';
+    }
+    if (last && A[last].includes(v)) return 'dfs-like';
+    return 'not-on-frontier';
+  } else {
+    const path = step.frontier, top = path.at(-1), last = P.sim.order[k - 1];
+    if (A[top].includes(v)) return 'tie-break';
+    const below = path.slice(0, -1).some(u => A[u].includes(v));
+    if (below) return top === last ? 'bfs-like' : 'backtrack-error';
+    if ([...visitedSet].some(u => A[u].includes(v))) return 'bfs-like';
+    return 'not-on-frontier';
+  }
+}
+const GMSG = {
+  'revisit': 'That vertex was already visited. A search never visits a vertex twice.',
+  'tie-break': 'That vertex is a valid candidate, but ties are broken alphabetically.',
+  'dfs-like': 'That is what DFS would do (go deep from the vertex you just visited). BFS takes the vertex at the FRONT of the queue.',
+  'lifo-instead-of-fifo': 'You took the most recently added vertex (stack behavior). BFS uses a queue: first in, first out.',
+  'queue-order': 'That vertex is in the queue, but not at the front. BFS always takes the front.',
+  'bfs-like': 'That is breadth-first behavior. DFS keeps going deeper from the vertex on top of the stack before trying other branches.',
+  'backtrack-error': 'When DFS hits a dead end it backtracks only one level, to the most recent vertex that still has unvisited neighbors.',
+  'not-on-frontier': 'That vertex is not reachable yet: it is not adjacent to anything visited.'
+};
+
+/* ---- Euler ---- */
+function eulerClass(G) { const odd = G.V.filter(v => degreeOf(G, v) % 2).length; return odd === 0 ? 'circuit' : odd === 2 ? 'path' : 'none'; }
+const EULER_LEVELS = { 1: { n: 6, p: .4, deg: 'show' }, 2: { n: 7, p: .4, deg: 'button' }, 3: { n: 8, p: .45, deg: 'button' }, 4: { n: 9, p: .45, deg: 'none' } };
+function makeEulerPuzzle() {
+  const level = getLevel('euler'), L = EULER_LEVELS[level];
+  const qi = State.queue.euler.findIndex(() => true);
+  if (qi >= 0) { const p = State.queue.euler.splice(qi, 1)[0]; const G = circleLayout({ V: p.vertices.slice().sort(), E: p.edges.map(e => e.slice().sort()) }); return { G, cls: eulerClass(G), level, deg: L.deg, source: 'pack' }; }
+  const focus = focusFor('euler', ['circuit-rule-for-path', 'circuit-vs-path', 'missed-existence', 'false-existence', 'wrong-start-vertex', 'bridge-burned']);
+  let target = pick(['circuit', 'path', 'path', 'none']);
+  if (focus === 'circuit-rule-for-path' || focus === 'missed-existence' || focus === 'wrong-start-vertex' || focus === 'bridge-burned') target = 'path';
+  if (focus === 'circuit-vs-path') target = pick(['circuit', 'path']);
+  if (focus === 'false-existence') target = 'none';
+  const G = generate('euler', target, level, focus, () => randGraph(L.n, L.p), G => {
+    const r = [];
+    if (!connected(G)) r.push('disconnected');
+    if (G.E.length < G.V.length || G.E.length > 14) r.push('edge-count');
+    if (eulerClass(G) !== target) r.push('category-mismatch');
+    const key = G.E.map(e => e.join('')).sort().join(','); if (seenKey('euler', key)) r.push('duplicate');
+    return r;
+  }, 3000);
+  if (!G) return null;
+  return { G, cls: target, level, deg: L.deg, focus };
+}
+
+/* =========================================================================
+   PAGES
+   ========================================================================= */
+const app = $('#app');
+const PAGES = [['home', 'Home'], ['expr', 'Expression Trees'], ['bfsdfs', 'BFS vs DFS'], ['euler', 'Euler Paths'], ['instructor', 'Instructor']];
+let current = null; // active tracker (skipped if the student leaves mid-puzzle)
+function go(page) {
+  if (current && !current.done) current.skip(); current = null;
+  if (page !== 'home' && page !== 'instructor' && !State.sid) page = 'home';
+  State.page = page; renderNav(); app.replaceChildren();
+  ({ home: Home, expr: ExprPage, bfsdfs: GraphPage, euler: EulerPage, instructor: Instructor })[page]();
+  window.scrollTo(0, 0);
+}
+function renderNav() {
+  $('#nav').replaceChildren(...PAGES.map(([k, t]) => h('button', { class: State.page === k ? 'on' : '', onclick: () => go(k) }, t)));
+  $('#who').replaceChildren(State.sid ? h('span', {}, 'ID: ', h('b', {}, State.sid), ' ', h('button', { class: 'btn ghost', style: 'padding:2px 8px;font-size:13px', onclick: () => { State.sid = ''; localStorage.removeItem('dmg_sid'); go('home'); } }, 'Switch')) : '');
+}
+function levelBar(game, extra) {
+  return h('div', { class: 'bar' }, h('span', { class: 'pill' }, 'Level ' + getLevel(game) + ' of 4'), extra || '', h('span', { class: 'small' }, 'Levels adjust automatically as you play.'));
+}
+function fb(el, kind, text) { el.className = 'fb ' + kind; el.replaceChildren(...[].concat(text)); }
+
+function Home() {
+  if (!State.sid) {
+    const idIn = h('input', { type: 'text', placeholder: 'e.g. MA0742', maxlength: 12, style: 'text-transform:uppercase;width:160px' });
+    const yes = h('input', { type: 'radio', name: 'c', value: 'yes', id: 'cy' }), no = h('input', { type: 'radio', name: 'c', value: 'no', id: 'cn' });
+    if (State.consent === 'yes') yes.checked = true; if (State.consent === 'no') no.checked = true;
+    const msg = h('div', { class: 'fb' });
+    const start = () => {
+      const id = idIn.value.trim().toUpperCase();
+      if (!/^[A-Z0-9]{3,12}$/.test(id)) return fb(msg, 'bad', 'Enter your anonymous code (letters and digits only).');
+      const c = yes.checked ? 'yes' : no.checked ? 'no' : '';
+      if (!c) return fb(msg, 'bad', 'Please choose one consent option. You can play either way.');
+      State.sid = id; State.consent = c; localStorage.setItem('dmg_sid', id); localStorage.setItem('dmg_consent', c);
+      Log.add({ kind: 'session-start', detail: navigator.userAgent.slice(0, 80) });
+      go('home');
+    };
+    idIn.addEventListener('keydown', e => { if (e.key === 'Enter') start(); });
+    app.append(h('div', { class: 'card' },
+      h('h2', {}, 'Welcome'),
+      h('p', {}, 'Type your anonymous code. Use the same code all week, on paper and here: first two letters of your mother\'s (or a guardian\'s) first name, your birth day (two digits), and the last two digits of your phone number. Example: ', h('code', {}, 'MA0742'), '.'),
+      h('p', {}, idIn),
+      h('p', {}, h('b', {}, 'Research consent. '), 'Everyone plays the games as coursework. Your choice only decides whether your anonymous game data is analyzed for research. It does not affect your grade.'),
+      h('p', {}, h('label', {}, yes, ' Yes, my anonymous game data may be used for research (I am 18 or older).')),
+      h('p', {}, h('label', {}, no, ' No, do not use my data for research.')),
+      h('button', { class: 'btn', onclick: start }, 'Start'), msg));
+    setTimeout(() => idIn.focus(), 0);
+    return;
+  }
+  const games = [
+    ['expr', 'Expression Trees', 'Build trees from infix, prefix or postfix; click traversals; spot the error; evaluate.'],
+    ['bfsdfs', 'BFS vs DFS Explorer', 'Run breadth-first or depth-first search one vertex at a time, with the queue or stack in view.'],
+    ['euler', 'Euler Path Hunter', 'Decide from vertex degrees whether an Euler path or circuit exists, then trace it.']
+  ];
+  app.append(h('div', { class: 'grid3' }, games.map(([k, t, d]) => h('div', { class: 'card gamecard', onclick: () => go(k) }, h('h2', {}, t), h('p', { class: 'small' }, d), h('span', { class: 'pill' }, 'Level ' + getLevel(k))))));
+  const mine = Log.all().filter(r => r.student === State.sid);
+  const solved = mine.filter(r => r.kind === 'attempt' && r.correct == 1).length;
+  app.append(h('div', { class: 'card' }, h('h3', {}, 'My data'),
+    h('p', { class: 'small' }, `Puzzles solved on this device under ${State.sid}: ${solved}. When your instructor asks, download your data and upload the file where they tell you.`),
+    h('button', { class: 'btn sec', onclick: () => download(`dmath-games-${State.sid}-${new Date().toISOString().slice(0, 10)}.csv`, toCSV(mine)) }, 'Download my data (CSV)'),
+    copyBtn('Copy my data (if download is blocked)', () => toCSV(mine))));
+}
+
+/* ---------------- Expression Trees page ---------------- */
+const ExprUI = { mode: 'build', fmt: 'mixed' };
+function ExprPage() {
+  const modes = [['build', 'Build the tree'], ['traverse', 'Traversal race'], ['spot', 'Spot the error'], ['evaluate', 'Evaluate']];
+  const tabs = h('div', { class: 'tabs' }, modes.map(([k, t]) => h('button', { class: ExprUI.mode === k ? 'on' : '', onclick: () => { ExprUI.mode = k; go('expr'); } }, t)));
+  const fmtSel = h('select', { onchange: e => { ExprUI.fmt = e.target.value; go('expr'); } }, ['mixed', 'infix', 'prefix', 'postfix'].map(f => h('option', { value: f, selected: ExprUI.fmt === f }, 'Source: ' + f)));
+  const stage = h('div', {});
+  app.append(h('div', { class: 'card' }, h('h2', {}, 'Expression Trees'), tabs, levelBar('expr', ExprUI.mode === 'build' ? fmtSel : ''), stage));
+  newExpr(stage);
+}
+function newExpr(stage) {
+  if (current && !current.done) current.skip();
+  stage.replaceChildren();
+  let P; try { P = makeExprPuzzle(ExprUI.mode, ExprUI.fmt); } catch (e) { P = null; console.error(e); }
+  if (!P) { stage.append(h('p', {}, 'Could not generate a valid puzzle. Try again.'), h('button', { class: 'btn', onclick: () => newExpr(stage) }, 'Try again')); return; }
+  const desc = P.mode === 'build' ? `${P.fmt}: ${P.src}` : P.mode === 'traverse' ? `${P.order}: ${infix(P.tree)}` : P.mode === 'spot' ? `${P.mtype}: ${P.src} shown as ${pre(P.wrong).join(' ')}` : `${P.fmt}: ${P.src}`;
+  current = new Tracker('expr', P.mode, P.level, desc, P.source, P.focus);
+  if (P.focus) stage.append(h('p', {}, h('span', { class: 'pill focus' }, 'Targeted practice: ' + P.focus.replace(/-/g, ' '))));
+  const next = h('button', { class: 'btn', onclick: () => newExpr(stage) }, 'Next puzzle');
+  const skip = h('button', { class: 'btn ghost', onclick: () => newExpr(stage) }, 'Skip');
+  ({ build: viewBuild, traverse: viewTraverse, spot: viewSpot, evaluate: viewEval })[P.mode](stage, P, current, () => { skip.remove(); const lv = current.complete(); stage.append(lv ? h('p', { class: 'small' }, lv === 'up' ? 'Level up!' : 'Level adjusted to give you more practice.') : '', next); setTimeout(() => next.focus(), 400); });
+  stage.append(skip);
+}
+function viewBuild(stage, P, T, done) {
+  stage.append(h('p', { class: 'prompt' }, `Build the expression tree for this ${P.fmt} expression:`), h('div', { class: 'expr' }, P.src),
+    h('p', { class: 'small' }, 'Click a ? slot, then a token. Operators create two new slots. Click a filled node to clear it.'));
+  const root = { empty: true }; let sel = root, finished = false;
+  const toks = pre(P.tree).slice().sort((a, b) => (isOp(b) - isOp(a)) || a.localeCompare(b));
+  const chips = toks.map(t => ({ t, used: false }));
+  const treeBox = h('div', {}), chipBox = h('div', { class: 'chips' }), msg = h('div', { class: 'fb' });
+  const clearSub = n => { if (n.op) { clearSub(n.l); clearSub(n.r); } if (n.chip != null) chips[n.chip].used = false; for (const k of Object.keys(n)) delete n[k]; n.empty = true; };
+  const empties = n => n.empty ? [n] : n.op ? [...empties(n.l), ...empties(n.r)] : [];
+  function redraw() {
+    treeBox.replaceChildren(drawTree(root, { cls: n => n === sel ? 'sel' : '', onNode: n => { if (finished) return; if (!n.empty) clearSub(n); sel = n; redraw(); } }));
+    chipBox.replaceChildren(...chips.map((c, i) => h('button', { class: 'chip' + (isOp(c.t) ? ' opchip' : ''), disabled: c.used || !sel || finished, onclick: () => place(i) }, c.t)));
+  }
+  function place(i) {
+    if (!sel || !sel.empty) return; const c = chips[i]; c.used = true; delete sel.empty; sel.chip = i;
+    if (isOp(c.t)) { sel.op = c.t; sel.l = { empty: true }; sel.r = { empty: true }; } else sel.v = c.t;
+    const e = empties(root); sel = e.length === 1 ? e[0] : null; redraw();
+  }
+  const check = h('button', { class: 'btn', onclick: () => {
+    const d = diagnoseBuild(root, P);
+    if (d.sub === 'incomplete') return fb(msg, 'info', MSG.incomplete);
+    T.attempt(d.ok, d.sub, pre(root).join(' '), pre(P.tree).join(' '), d.ok && d.sub ? 'accepted ' + d.sub : '');
+    if (d.ok) { finished = true; check.disabled = true; reset.disabled = true; fb(msg, 'good', d.sub ? MSG[d.sub] : 'Correct!'); redraw(); done(); }
+    else fb(msg, 'bad', [h('b', {}, 'Not yet. '), MSG[d.sub] || '']);
+  } }, 'Check');
+  const reset = h('button', { class: 'btn ghost', onclick: () => { clearSub(root); sel = root; redraw(); } }, 'Clear all');
+  stage.append(treeBox, chipBox, h('div', {}, check, reset), msg); redraw();
+}
+function viewTraverse(stage, P, T, done) {
+  const names = { preorder: 'preorder (prefix)', inorder: 'inorder (infix)', postorder: 'postorder (postfix)' };
+  stage.append(h('p', { class: 'prompt' }, 'Click every node in ', h('b', {}, names[P.order]), ' order.'));
+  let seq = [], finished = false; const box = h('div', {}), out = h('div', { class: 'expr' }), msg = h('div', { class: 'fb' });
+  const want = TRAV[P.order](P.tree);
+  function redraw() {
+    box.replaceChildren(drawTree(P.tree, { cls: n => seq.includes(n) ? 'picked' : '', badge: n => { const i = seq.indexOf(n); return i >= 0 ? String(i + 1) : ''; }, onNode: n => { if (finished || seq.includes(n)) return; seq.push(n); redraw(); if (seq.length === want.length) check(); } }));
+    out.textContent = seq.length ? seq.map(n => n.op || n.v).join(' ') : ' ';
+  }
+  function check() {
+    const d = diagnoseTraversal(seq, P);
+    T.attempt(d.ok, d.sub, seq.map(n => n.op || n.v).join(' '), want.map(n => n.op || n.v).join(' '), d.detail);
+    if (d.ok) { finished = true; fb(msg, 'good', 'Correct! ' + names[P.order] + ': ' + want.map(n => n.op || n.v).join(' ')); done(); }
+    else { fb(msg, 'bad', [h('b', {}, 'Not yet. '), MSG[d.sub], d.detail ? ' (' + d.detail + ')' : '', ' Clear and try again.']); }
+  }
+  stage.append(box, h('p', { class: 'small' }, 'Your sequence:'), out, h('div', {},
+    h('button', { class: 'btn ghost', onclick: () => { if (!finished) { seq.pop(); redraw(); } } }, 'Undo'),
+    h('button', { class: 'btn ghost', onclick: () => { if (!finished) { seq = []; redraw(); } } }, 'Clear')), msg);
+  redraw();
+}
+function viewSpot(stage, P, T, done) {
+  stage.append(h('p', { class: 'prompt' }, 'A classmate drew this tree for'), h('div', { class: 'expr' }, P.src),
+    h('p', {}, 'It has exactly one mistake. ', h('b', {}, 'Click the node where the tree first goes wrong'), ' (the highest node whose subtree is wrong), then choose the kind of error.'));
+  let node = null, type = null, finished = false;
+  const box = h('div', {}), msg = h('div', { class: 'fb' }), ans = h('div', {});
+  const types = [['precedence', 'Operator precedence'], ['associativity', 'Grouping of same-level operators'], ['operand-order', 'Left/right operands swapped'], ['wrong-operator', 'Wrong operator']];
+  const choice = h('div', { class: 'choice' });
+  function redraw() {
+    box.replaceChildren(drawTree(P.wrong, { cls: n => finished && n === P.errNode ? 'bad' : n === node ? 'sel' : '', onNode: n => { if (!finished) { node = n; redraw(); } } }));
+    choice.replaceChildren(...types.map(([k, t]) => h('button', { class: 'btn ghost' + (type === k ? ' on' : ''), disabled: finished, onclick: () => { type = k; redraw(); } }, t)));
+  }
+  const check = h('button', { class: 'btn', onclick: () => {
+    if (!node || !type) return fb(msg, 'info', 'Click a node and choose an error type first.');
+    const okNode = node === P.errNode, okType = type === P.mtype, ok = okNode && okType;
+    const sub = ok ? '' : (P.mtype === 'wrong-operator' ? 'missed-wrong-operator' : P.mtype);
+    T.attempt(ok, sub, (node.op || node.v) + '@' + node._x + ' / ' + type, (P.errNode.op || P.errNode.v) + '@' + P.errNode._x + ' / ' + P.mtype, okType ? 'type ok, node wrong' : okNode ? 'node ok, type wrong' : 'both wrong');
+    if (ok) {
+      finished = true; check.disabled = true; redraw();
+      fb(msg, 'good', 'Correct! Here is the right tree:'); ans.append(drawTree(P.tree)); done();
+    } else fb(msg, 'bad', okType ? MSG.mislocated : MSG['wrong-type']);
+  } }, 'Check');
+  stage.append(box, choice, check, msg, ans); redraw();
+}
+function viewEval(stage, P, T, done) {
+  stage.append(h('p', { class: 'prompt' }, `Evaluate this ${P.fmt} expression${P.fmt === 'infix' ? ' (normal precedence rules)' : ''}:`), h('div', { class: 'expr' }, P.src));
+  const inp = h('input', { type: 'text', inputmode: 'numeric', style: 'width:120px;font-size:18px' }), msg = h('div', { class: 'fb' }), ans = h('div', {});
+  const clock = h('span', { class: 'pill' }, '0.0 s'); const t0 = performance.now();
+  const timer = setInterval(() => { if (!document.body.contains(clock)) return clearInterval(timer); clock.textContent = ((performance.now() - t0) / 1000).toFixed(1) + ' s'; }, 100);
+  let finished = false;
+  const check = () => {
+    if (finished) return; const a = Number(inp.value.trim()); if (inp.value.trim() === '' || !Number.isFinite(a)) return fb(msg, 'info', 'Type a number.');
+    const d = diagnoseEval(a, P); T.attempt(d.ok, d.sub, a, P.value);
+    if (d.ok) { finished = true; clearInterval(timer); fb(msg, 'good', `Correct! ${P.value}, in ${((performance.now() - t0) / 1000).toFixed(1)} s.`); ans.append(h('p', { class: 'small' }, 'The tree:'), drawTree(P.tree)); done(); }
+    else fb(msg, 'bad', [h('b', {}, 'Not yet. '), MSG[d.sub] || MSG['arithmetic-or-other']]);
+  };
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+  stage.append(h('div', {}, inp, ' ', h('button', { class: 'btn', onclick: check }, 'Check'), ' ', clock), msg, ans);
+  setTimeout(() => inp.focus(), 0);
+}
+
+/* ---------------- BFS vs DFS page ---------------- */
+const GraphUI = { algo: 'mixed' };
+function GraphPage() {
+  const tabs = h('div', { class: 'tabs' }, [['mixed', 'Mixed'], ['bfs', 'BFS only'], ['dfs', 'DFS only']].map(([k, t]) => h('button', { class: GraphUI.algo === k ? 'on' : '', onclick: () => { GraphUI.algo = k; go('bfsdfs'); } }, t)));
+  const stage = h('div', {});
+  app.append(h('div', { class: 'card' }, h('h2', {}, 'BFS vs DFS Explorer'), tabs, levelBar('bfsdfs'), stage));
+  newGraph(stage);
+}
+function newGraph(stage) {
+  if (current && !current.done) current.skip();
+  stage.replaceChildren();
+  const P = makeBfsDfsPuzzle(GraphUI.algo);
+  if (!P) { stage.append(h('p', {}, 'Could not generate a valid graph.'), h('button', { class: 'btn', onclick: () => newGraph(stage) }, 'Try again')); return; }
+  P.A = adjOf(P.G); P.sim = P.algo === 'bfs' ? simBFS(P.G, P.s) : simDFS(P.G, P.s);
+  const desc = `${P.algo} from ${P.s}; V=${P.G.V.join('')}; E=${P.G.E.map(e => e.join('')).join(',')}`;
+  const T = current = new Tracker('bfsdfs', P.algo, P.level, desc, P.source, P.focus);
+  const name = P.algo === 'bfs' ? 'breadth-first search (BFS)' : 'depth-first search (DFS)';
+  if (P.focus) stage.append(h('p', {}, h('span', { class: 'pill focus' }, 'Targeted practice: ' + P.focus.replace(/-/g, ' '))));
+  stage.append(h('p', { class: 'prompt' }, 'Run ', h('b', {}, name), ' from ', h('b', {}, P.s), '. When there is a choice, take neighbors in ', h('b', {}, 'alphabetical order'), '. Click the vertices in the order they are visited.'));
+  let k = 1; const visited = new Set([P.s]); const visitedList = [P.s]; let flash = null, finished = false;
+  const gbox = h('div', {}), ds = h('div', { class: 'ds' }), order = h('div', { class: 'ds' }), msg = h('div', { class: 'fb' });
+  const dsTitle = P.algo === 'bfs' ? 'Queue (front on the left)' : 'Stack: current DFS path (top on the right)';
+  function redraw() {
+    const step = P.sim.steps[k] || { frontier: [] };
+    const cur = P.algo === 'dfs' ? (step.frontier.at(-1) || visitedList.at(-1)) : visitedList.at(-1);
+    gbox.replaceChildren(drawGraph(P.G, {
+      vcls: v => [visited.has(v) ? 'visited' : '', v === cur && !finished ? 'cur' : '', v === flash ? 'flash' : ''].join(' '),
+      badge: v => { const i = visitedList.indexOf(v); return i >= 0 ? '#' + (i + 1) : ''; },
+      ecls: (u, v) => (P.sim.parent[v] === u && visited.has(v)) || (P.sim.parent[u] === v && visited.has(u)) ? 'tree' : '',
+      onV: click
+    }));
+    if (P.frontierShown) {
+      const items = finished ? [] : P.algo === 'bfs' ? step.frontier : step.frontier;
+      ds.replaceChildren(...(items.length ? items.map((x, i) => h('span', { class: (P.algo === 'bfs' ? i === 0 : i === items.length - 1) ? 'hot' : '' }, x)) : [h('span', { class: 'small', style: 'border:0;background:none' }, finished ? 'done' : 'empty')]));
+    } else ds.replaceChildren(h('span', { class: 'small', style: 'border:0;background:none' }, 'Hidden at this level: keep track in your head.'));
+    order.replaceChildren(...visitedList.map(x => h('span', {}, x)));
+  }
+  function click(v) {
+    if (finished) return;
+    const expected = P.sim.order[k];
+    if (v === expected) {
+      visited.add(v); visitedList.push(v); k++; flash = null; msg.className = 'fb';
+      if (k >= P.sim.order.length) {
+        finished = true; T.attempt(true, '', visitedList.join(' '), P.sim.order.join(' '), 'errors=' + T.errors);
+        fb(msg, 'good', `Done! ${P.algo.toUpperCase()} order: ${P.sim.order.join(' ')}. The green edges form the ${P.algo.toUpperCase()} spanning tree.`);
+        redraw(); const lv = T.complete(); stage.append(lv ? h('p', { class: 'small' }, lv === 'up' ? 'Level up!' : 'Level adjusted.') : '', nextB); skipB.remove(); return;
+      }
+    } else {
+      const sub = diagnoseGraphClick(v, P, k, visited);
+      T.attempt(false, sub, v, expected, 'step ' + (k + 1) + '; visited=' + visitedList.join(''));
+      flash = v; fb(msg, 'bad', GMSG[sub] || 'Not the next vertex.');
+    }
+    redraw();
+  }
+  const nextB = h('button', { class: 'btn', onclick: () => newGraph(stage) }, 'Next graph');
+  const skipB = h('button', { class: 'btn ghost', onclick: () => newGraph(stage) }, 'Skip');
+  stage.append(h('div', { class: 'cols' }, gbox, h('div', { class: 'panel' }, h('h3', {}, dsTitle), ds, h('h3', {}, 'Visit order'), order, msg)), skipB);
+  redraw();
+}
+
+/* ---------------- Euler page ---------------- */
+function EulerPage() {
+  const stage = h('div', {});
+  app.append(h('div', { class: 'card' }, h('h2', {}, 'Euler Path Hunter'), levelBar('euler'), stage));
+  newEuler(stage);
+}
+function newEuler(stage) {
+  if (current && !current.done) current.skip();
+  stage.replaceChildren();
+  const P = makeEulerPuzzle();
+  if (!P) { stage.append(h('p', {}, 'Could not generate a valid graph.'), h('button', { class: 'btn', onclick: () => newEuler(stage) }, 'Try again')); return; }
+  const G = P.G, A = adjOf(G);
+  const T = current = new Tracker('euler', 'classify+trace', P.level, `${P.cls}; V=${G.V.join('')}; E=${G.E.map(e => e.join('')).join(',')}`, P.source, P.focus);
+  if (P.focus) stage.append(h('p', {}, h('span', { class: 'pill focus' }, 'Targeted practice: ' + P.focus.replace(/-/g, ' '))));
+  let showDeg = P.deg === 'show', phase = 'classify', trail = [], used = new Set(), stuckLogged = false, flash = null;
+  const gbox = h('div', {}), msg = h('div', { class: 'fb' }), controls = h('div', {}), info = h('div', { class: 'ds' });
+  const odd = G.V.filter(v => degreeOf(G, v) % 2);
+  function redraw() {
+    gbox.replaceChildren(drawGraph(G, {
+      deg: showDeg, onV: phase === 'trace' ? traceClick : null,
+      vcls: v => [v === trail.at(-1) ? 'cur' : '', trail.includes(v) ? 'visited' : '', v === flash ? 'flash' : ''].join(' '),
+      ecls: (u, v) => used.has(ekey(u, v)) ? 'used' : '',
+      elabel: (u, v) => { for (let i = 1; i < trail.length; i++) if (ekey(trail[i - 1], trail[i]) === ekey(u, v)) return String(i); return ''; }
+    }));
+    info.replaceChildren(...trail.map(x => h('span', {}, x)));
+  }
+  function classify(choice) {
+    if (phase !== 'classify') return;
+    const ok = choice === P.cls; let sub = '';
+    if (!ok) {
+      if (P.cls === 'path' && choice === 'none') sub = 'circuit-rule-for-path';
+      else if (P.cls === 'path' && choice === 'circuit') sub = 'circuit-vs-path';
+      else if (P.cls === 'circuit' && choice === 'path') sub = 'circuit-vs-path';
+      else if (P.cls === 'circuit' && choice === 'none') sub = 'missed-existence';
+      else sub = 'false-existence';
+    }
+    T.attempt(ok, sub, choice, P.cls, 'odd=' + odd.length + (showDeg ? '; degrees shown' : ''));
+    if (!ok) {
+      const hint = { 'circuit-rule-for-path': 'An Euler PATH only needs exactly 0 or 2 odd-degree vertices; "all even" is the rule for a circuit.',
+        'circuit-vs-path': 'Count the odd-degree vertices: 0 odd means a circuit exists; exactly 2 odd means a path but no circuit.',
+        'missed-existence': 'All degrees here are even, so an Euler circuit exists.',
+        'false-existence': 'With more than 2 odd-degree vertices, no Euler path or circuit exists.' }[sub];
+      return fb(msg, 'bad', [h('b', {}, 'Not quite. '), hint]);
+    }
+    if (P.cls === 'none') {
+      fb(msg, 'good', `Correct: ${odd.length} vertices have odd degree (${odd.join(', ')}), so there is no Euler path.`);
+      phase = 'done'; showDeg = true; redraw(); controls.replaceChildren(); finish(); return;
+    }
+    phase = 'trace';
+    fb(msg, 'good', `Correct! Now trace an Euler ${P.cls}: click a start vertex, then click adjacent vertices to walk along unused edges.`);
+    controls.replaceChildren(
+      h('button', { class: 'btn ghost', onclick: () => { if (trail.length) { const b = trail.pop(); if (trail.length) used.delete(ekey(trail.at(-1), b)); stuckLogged = false; redraw(); } } }, 'Undo'),
+      h('button', { class: 'btn ghost', onclick: () => { trail = []; used = new Set(); stuckLogged = false; redraw(); } }, 'Restart trace'));
+    redraw();
+  }
+  function traceClick(v) {
+    flash = null;
+    if (!trail.length) {
+      if (P.cls === 'path' && degreeOf(G, v) % 2 === 0) {
+        T.attempt(false, 'wrong-start-vertex', v, odd.join(' or '), 'trace start');
+        flash = v; redraw(); return fb(msg, 'bad', `An Euler path must start at an odd-degree vertex. Vertex ${v} has even degree ${degreeOf(G, v)}.`);
+      }
+      trail.push(v); redraw(); msg.className = 'fb'; return;
+    }
+    const u = trail.at(-1);
+    if (!A[u].includes(v)) { T.attempt(false, 'not-an-edge', u + v, '', 'trace move'); flash = v; redraw(); return fb(msg, 'bad', `There is no edge ${u}-${v}.`); }
+    if (used.has(ekey(u, v))) { T.attempt(false, 'reused-edge', u + v, '', 'trace move'); flash = v; redraw(); return fb(msg, 'bad', `Edge ${u}-${v} was already used. Each edge exactly once!`); }
+    used.add(ekey(u, v)); trail.push(v); msg.className = 'fb';
+    if (used.size === G.E.length) {
+      T.attempt(true, '', trail.join(' '), P.cls, 'trace complete'); phase = 'done'; redraw();
+      fb(msg, 'good', `You found an Euler ${P.cls}: ${trail.join(' ')}`); controls.replaceChildren(); finish(); return;
+    }
+    if (!A[v].some(w => !used.has(ekey(v, w)))) {
+      if (!stuckLogged) { T.attempt(false, 'bridge-burned', trail.join(' '), '', `stuck with ${G.E.length - used.size} edges left`); stuckLogged = true; }
+      fb(msg, 'bad', `Stuck at ${v} with ${G.E.length - used.size} edges left. Tip: never cross an edge that cuts you off from unused edges unless you have no other choice. Undo or restart.`);
+    }
+    redraw();
+  }
+  function finish() { const lv = T.complete(); skipB.remove(); stage.append(lv ? h('p', { class: 'small' }, lv === 'up' ? 'Level up!' : 'Level adjusted.') : '', h('button', { class: 'btn', onclick: () => newEuler(stage) }, 'Next graph')); }
+  const degBtn = P.deg === 'button' ? h('button', { class: 'btn ghost', onclick: e => { showDeg = true; e.target.remove(); Log.add({ kind: 'hint', game: 'euler', puzzle_id: T.id, detail: 'show degrees' }); redraw(); } }, 'Show degrees (hint)') : '';
+  const choices = h('div', { class: 'choice' },
+    h('button', { class: 'btn sec', onclick: () => classify('circuit') }, 'Euler circuit exists'),
+    h('button', { class: 'btn sec', onclick: () => classify('path') }, 'Euler path, but no circuit'),
+    h('button', { class: 'btn sec', onclick: () => classify('none') }, 'Neither'));
+  const skipB = h('button', { class: 'btn ghost', onclick: () => newEuler(stage) }, 'Skip');
+  stage.append(h('p', { class: 'prompt' }, 'Step 1: Does this graph have an Euler circuit, an Euler path (but no circuit), or neither?'),
+    h('div', { class: 'cols' }, gbox, h('div', { class: 'panel' }, degBtn, choices, controls, h('h3', {}, 'Your trail'), info, msg)), skipB);
+  redraw();
+}
+
+/* ---------------- Instructor page ---------------- */
+function summarize(rows) {
+  const att = rows.filter(r => r.kind === 'attempt'), gen = rows.filter(r => r.kind === 'gen');
+  const students = new Set(rows.map(r => r.student).filter(Boolean));
+  const byGame = {};
+  for (const r of att) {
+    const g = byGame[r.game] || (byGame[r.game] = { attempts: 0, errors: 0, solved: 0, codes: {} });
+    g.attempts++; if (r.correct == 1) g.solved++; else { g.errors++; const c = r.misconception || 'OTHER'; g.codes[c] = (g.codes[c] || 0) + 1; }
+  }
+  const genStats = {};
+  for (const r of gen) {
+    const key = r.game + ' / ' + r.mode + (r.source && r.source !== 'generator' ? ' (' + r.source + ')' : '');
+    const s = genStats[key] || (genStats[key] = { puzzles: 0, accepted: 0, candidates: 0, rejects: {} });
+    s.puzzles++; if (r.correct == 1) s.accepted++; s.candidates += +r.candidates || 0;
+    for (const part of String(r.rejects || '').split('|').filter(Boolean)) { const [k, v] = part.split(':'); s.rejects[k] = (s.rejects[k] || 0) + (+v || 0); }
+  }
+  return { students, byGame, genStats, n: rows.length };
+}
+function summaryView(rows) {
+  const S_ = summarize(rows);
+  const codes = Object.keys(CODES);
+  const t1 = h('table', { class: 't' }, h('tr', {}, h('th', {}, 'Game'), h('th', {}, 'Attempts'), h('th', {}, 'Solved'), h('th', {}, 'Errors'), codes.map(c => h('th', { title: CODES[c] }, c))),
+    Object.entries(S_.byGame).map(([g, s]) => h('tr', {}, h('td', {}, g), h('td', {}, s.attempts), h('td', {}, s.solved), h('td', {}, s.errors), codes.map(c => h('td', {}, s.codes[c] || '')))));
+  const t2 = h('table', { class: 't' }, h('tr', {}, h('th', {}, 'Generator'), h('th', {}, 'Puzzles requested'), h('th', {}, 'Valid puzzles delivered'), h('th', {}, 'Candidates generated'), h('th', {}, 'First-pass acceptance'), h('th', {}, 'Rejections by validator check')),
+    Object.entries(S_.genStats).map(([k, s]) => h('tr', {}, h('td', {}, k), h('td', {}, s.puzzles), h('td', {}, s.accepted), h('td', {}, s.candidates), h('td', {}, s.candidates ? (100 * s.accepted / s.candidates).toFixed(1) + '%' : ''), h('td', { class: 'small' }, Object.entries(s.rejects).sort((a, b) => b[1] - a[1]).map(([r, v]) => r + ': ' + v).join(', ')))));
+  return h('div', {}, h('p', { class: 'small' }, `${S_.n} rows, ${S_.students.size} student IDs.`), h('h3', {}, 'Attempts and errors by misconception code'), t1,
+    h('p', { class: 'small' }, codes.map(c => c + ' = ' + CODES[c]).join(' · ')), h('h3', {}, 'Validated generation'), t2);
+}
+function Instructor() {
+  const local = Log.all();
+  const mergeOut = h('div', {});
+  const files = h('input', { type: 'file', multiple: true, accept: '.csv,text/csv', onchange: async e => {
+    let rows = []; for (const f of e.target.files) rows = rows.concat(parseCSV(await f.text()));
+    const seen = new Set(); rows = rows.filter(r => { const k = [r.ts, r.student, r.session, r.kind, r.puzzle_id, r.attempt_no].join('|'); if (seen.has(k)) return false; seen.add(k); return true; });
+    mergeOut.replaceChildren(h('p', {}, `Merged ${e.target.files.length} files.`), h('button', { class: 'btn', onclick: () => download('dmath-games-merged.csv', toCSV(rows)) }, 'Download merged CSV'),
+      h('button', { class: 'btn sec', onclick: () => download('dmath-games-merged-consented.csv', toCSV(rows.filter(r => r.consent === 'yes'))) }, 'Download consented rows only'), summaryView(rows));
+  } });
+  const ta = h('textarea', { placeholder: PACK_EXAMPLE });
+  const packOut = h('div', {});
+  app.append(
+    h('div', { class: 'card' }, h('h2', {}, 'Instructor tools'),
+      h('p', { class: 'small' }, 'Game data is stored in each browser. Ask students to click "Download my data (CSV)" on the Home page and upload the file to your LMS, then merge the files below. Opening this page does not change any data.')),
+    h('div', { class: 'card' }, h('h3', {}, 'Merge student CSV files'), files, mergeOut),
+    h('div', { class: 'card' }, h('h3', {}, 'Data on this device'), summaryView(local),
+      h('button', { class: 'btn', onclick: () => download('dmath-games-this-device.csv', toCSV(local)) }, 'Download all data on this device'),
+      copyBtn('Copy as CSV text', () => toCSV(local)),
+      h('button', { class: 'btn ghost', onclick: e => { if (e.target.dataset.armed) { Log.clear(); go('instructor'); } else { e.target.dataset.armed = 1; e.target.textContent = 'Click again to delete all data in this browser'; } } }, 'Clear this device')),
+    h('div', { class: 'card' }, h('h3', {}, 'Validate a puzzle pack (for AI-generated puzzles)'),
+      h('p', { class: 'small' }, 'Paste puzzles as JSON, for example ones an LLM wrote. Each one is checked by the same validator the generators use; valid ones become a link that serves those puzzles first. Every check result is logged as a validation row.'),
+      ta, h('button', { class: 'btn', onclick: () => validatePack(ta.value, packOut) }, 'Validate'), packOut),
+    h('div', { class: 'card' }, h('h3', {}, 'Self-test the validators'), h('p', { class: 'small' }, 'Generates 200 puzzles per mode and re-checks every one independently.'),
+      h('button', { class: 'btn sec', onclick: e => { e.target.disabled = true; setTimeout(() => { const r = selfTest(200); e.target.after(h('pre', { class: 'small' }, r)); }, 20); } }, 'Run self-test')));
+}
+const PACK_EXAMPLE = `[
+ {"game":"expr","mode":"build","format":"postfix","infix":"(a - b) * c","prefix":"* - a b c","postfix":"a b - c *"},
+ {"game":"expr","mode":"evaluate","format":"postfix","infix":"6 * (2 + 3) - 4","value":26},
+ {"game":"bfsdfs","algo":"bfs","vertices":["A","B","C","D","E","F"],"edges":[["A","B"],["A","D"],["B","C"],["B","E"],["C","F"],["D","E"],["D","F"]],"start":"A","bfs_order":["A","B","D","C","E","F"],"dfs_order":["A","B","C","F","D","E"]},
+ {"game":"euler","vertices":["P","Q","R","S"],"edges":[["P","Q"],["Q","R"],["R","S"],["S","P"],["P","R"]],"claim":"path","example":["P","Q","R","S","P","R"]}
+]`;
+/* Independent validator for externally (LLM-)generated puzzles. Returns failed checks. */
+function validatePackItem(p) {
+  const r = [];
+  if (p.game === 'expr') {
+    let t; try { t = parseInfix(p.infix); } catch (e) { return ['infix-parse: ' + e.message]; }
+    if (!checkStructure(t)) r.push('invalid-structure');
+    if (p.prefix != null) { try { if (!arrEq(tokenize(p.prefix), pre(t))) r.push('prefix-mismatch (should be ' + pre(t).join(' ') + ')'); } catch { r.push('prefix-parse'); } }
+    if (p.postfix != null) { try { if (!arrEq(tokenize(p.postfix), post(t))) r.push('postfix-mismatch (should be ' + post(t).join(' ') + ')'); } catch { r.push('postfix-parse'); } }
+    const numeric = nodesOf(t).every(n => n.op || /^\d+$/.test(n.v));
+    if ((p.mode === 'evaluate' || p.value != null) && !numeric) r.push('evaluate-needs-numbers');
+    if (numeric && (p.mode === 'evaluate' || p.value != null)) { try { const v = evalInt(t); if (p.value != null && +p.value !== v) r.push('value-mismatch (should be ' + v + ')'); } catch (e) { r.push(e.message); } }
+    if (p.mode && !['build', 'traverse', 'evaluate'].includes(p.mode)) r.push('unknown-mode');
+    if (p.format && !['infix', 'prefix', 'postfix'].includes(p.format)) r.push('unknown-format');
+    if (p.order && !['preorder', 'inorder', 'postorder'].includes(p.order)) r.push('unknown-order');
+  } else if (p.game === 'bfsdfs' || p.game === 'euler') {
+    if (!Array.isArray(p.vertices) || !Array.isArray(p.edges)) return ['missing-vertices-or-edges'];
+    const G = { V: p.vertices.map(String), E: p.edges.map(e => e.map(String)) };
+    if (G.V.length > 12) r.push('too-many-vertices');
+    if (p.game === 'bfsdfs') {
+      r.push(...validateBfsDfsGraph(G, p.start).filter(x => x !== 'too-few-decisions'));
+      if (!r.length) {
+        if (p.bfs_order && !arrEq(p.bfs_order, simBFS(G, p.start).order)) r.push('bfs-order-mismatch (should be ' + simBFS(G, p.start).order.join(' ') + ')');
+        if (p.dfs_order && !arrEq(p.dfs_order, simDFS(G, p.start).order)) r.push('dfs-order-mismatch (should be ' + simDFS(G, p.start).order.join(' ') + ')');
+        if (p.algo && !['bfs', 'dfs'].includes(p.algo)) r.push('unknown-algo');
+      }
+    } else {
+      const vs = new Set(G.V), ek = new Set();
+      for (const [u, v] of G.E) { if (!vs.has(u) || !vs.has(v)) r.push('unknown-vertex'); if (u === v) r.push('self-loop'); if (ek.has(ekey(u, v))) r.push('multi-edge'); ek.add(ekey(u, v)); }
+      if (!r.length && !connected(G)) r.push('disconnected');
+      if (!r.length) {
+        const c = eulerClass(G);
+        if (p.claim && p.claim !== c) r.push('claim-mismatch (degrees say ' + c + ')');
+        if (Array.isArray(p.example)) {
+          const used = new Set(); let okWalk = true;
+          for (let i = 1; i < p.example.length; i++) { const k = ekey(p.example[i - 1], p.example[i]); if (!ek.has(k) || used.has(k)) { okWalk = false; break; } used.add(k); }
+          if (!okWalk || used.size !== G.E.length) r.push('example-walk-invalid');
+          else if (c === 'circuit' && p.example[0] !== p.example.at(-1)) r.push('example-not-closed');
+        }
+      }
+    }
+  } else r.push('unknown-game');
+  return [...new Set(r)];
+}
+function validatePack(text, out) {
+  let arr; try { arr = JSON.parse(text || PACK_EXAMPLE); if (!Array.isArray(arr)) throw Error('top level must be a JSON array'); } catch (e) { out.replaceChildren(h('div', { class: 'fb bad' }, 'JSON error: ' + e.message)); return; }
+  const rows = arr.map((p, i) => { const reasons = validatePackItem(p); Log.add({ kind: 'gen', game: p.game || '?', mode: p.mode || p.algo || p.claim || '', source: 'pack', correct: reasons.length ? 0 : 1, candidates: 1, rejects: reasons.map(x => x.split(' ')[0] + ':1').join('|'), puzzle: JSON.stringify(p).slice(0, 300) }); return { i, p, reasons }; });
+  const valid = rows.filter(r => !r.reasons.length).map(r => r.p);
+  const link = location.href.split('#')[0] + '#pack=' + b64(JSON.stringify(valid));
+  out.replaceChildren(
+    h('table', { class: 't' }, h('tr', {}, h('th', {}, '#'), h('th', {}, 'Game'), h('th', {}, 'Result')), rows.map(r => h('tr', {}, h('td', {}, r.i + 1), h('td', {}, r.p.game || '?'), h('td', {}, r.reasons.length ? h('span', { style: 'color:var(--bad)' }, 'REJECTED: ' + r.reasons.join('; ')) : h('span', { style: 'color:var(--good)' }, 'valid'))))),
+    h('p', {}, `${valid.length} of ${arr.length} puzzles passed.`),
+    valid.length ? h('p', {}, 'Student link that serves these puzzles first: ', h('input', { type: 'text', value: link, readonly: true, style: 'width:100%', onclick: e => e.target.select() })) : '');
+}
+function copyBtn(label, text) {
+  return h('button', { class: 'btn ghost', onclick: async e => {
+    const t = text();
+    try { await navigator.clipboard.writeText(t); e.target.textContent = 'Copied! Paste it into a text file or your LMS.'; }
+    catch { const ta = h('textarea', { readonly: true }); ta.value = t; e.target.after(ta); ta.select(); e.target.textContent = 'Select all and copy the text below'; }
+  } }, label);
+}
+const b64 = s => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
+const unb64 = s => new TextDecoder().decode(Uint8Array.from(atob(s), c => c.charCodeAt(0)));
+
+/* Self-test: generate many puzzles and re-verify each with independent checks. */
+function selfTest(N) {
+  const saveLog = localStorage.getItem(LOGKEY), saveLv = { ...State.levels }, saveRecent = State.recent; const lines = []; let fails = 0;
+  State.recent = {};
+  for (const lv of [1, 2, 3, 4]) {
+    State.levels.expr = State.levels.bfsdfs = State.levels.euler = lv;
+    for (const mode of ['build', 'traverse', 'spot', 'evaluate']) {
+      let bad = 0;
+      for (let i = 0; i < N / 4; i++) {
+        const P = makeExprPuzzle(mode, 'mixed'); if (!P) { bad++; continue; }
+        if (!checkStructure(P.tree)) bad++;
+        if (mode === 'build') { const back = P.fmt === 'infix' ? parseInfix(P.src) : P.fmt === 'prefix' ? parsePrefix(P.src) : parsePostfix(P.src); if (!eq(back, P.tree)) bad++; if (!diagnoseBuild(clone(P.tree), P).ok) bad++; }
+        if (mode === 'spot' && (equivalent(P.tree, P.wrong) || !P.errNode)) bad++;
+        if (mode === 'evaluate') { const back = P.fmt === 'infix' ? parseInfix(P.src) : P.fmt === 'prefix' ? parsePrefix(P.src) : parsePostfix(P.src); if (evalInt(back) !== P.value || !diagnoseEval(P.value, P).ok) bad++; }
+        if (mode === 'traverse' && !diagnoseTraversal(TRAV[P.order](P.tree), P).ok) bad++;
+      }
+      fails += bad; lines.push(`expr L${lv} ${mode}: ${N / 4} generated, ${bad} failed re-check`);
+    }
+    for (const algo of ['bfs', 'dfs']) {
+      let bad = 0;
+      for (let i = 0; i < N / 4; i++) { const P = makeBfsDfsPuzzle(algo); if (!P || !connected(P.G) || arrEq(simBFS(P.G, P.s).order, simDFS(P.G, P.s).order) || simBFS(P.G, P.s).order.length !== P.G.V.length) bad++; }
+      fails += bad; lines.push(`graph L${lv} ${algo}: ${N / 4} generated, ${bad} failed re-check`);
+    }
+    let bad = 0;
+    for (let i = 0; i < N / 4; i++) { const P = makeEulerPuzzle(); if (!P || !connected(P.G) || eulerClass(P.G) !== P.cls || (P.cls !== 'none' && !hierholzer(P.G))) bad++; }
+    fails += bad; lines.push(`euler L${lv}: ${N / 4} generated, ${bad} failed re-check`);
+  }
+  if (saveLog == null) localStorage.removeItem(LOGKEY); else localStorage.setItem(LOGKEY, saveLog);
+  State.levels = saveLv; localStorage.setItem('dmg_levels', JSON.stringify(saveLv)); State.recent = saveRecent;
+  return (fails ? `FAILURES: ${fails}\n` : 'All puzzles passed independent re-checks.\n') + lines.join('\n');
+}
+/* Constructive check that an Euler path/circuit really exists (Hierholzer). */
+function hierholzer(G) {
+  const A = adjOf(G), used = new Set(); const odd = G.V.filter(v => A[v].length % 2);
+  let start = odd[0] || G.V[0]; const st = [start], walk = [];
+  while (st.length) { const v = st.at(-1); const w = A[v].find(x => !used.has(ekey(v, x))); if (w) { used.add(ekey(v, w)); st.push(w); } else walk.push(st.pop()); }
+  return walk.length === G.E.length + 1;
+}
+
+/* ---------- boot ---------- */
+(function boot() {
+  const m = location.hash.match(/pack=([^&]+)/);
+  if (m) {
+    try {
+      const arr = JSON.parse(unb64(decodeURIComponent(m[1])));
+      for (const p of arr) if (!validatePackItem(p).length && State.queue[p.game]) State.queue[p.game].push(p);
+    } catch (e) { console.warn('bad pack', e); }
+  }
+  go('home');
+})();
+</script>
+</body>
+</html>
