@@ -13,7 +13,7 @@ header h1{font-size:18px;margin:0 12px 0 0}
 header nav{display:flex;flex-wrap:wrap;gap:6px}
 header nav button{background:transparent;color:#cfd6e6;border:1px solid #3a4560;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:14px}
 header nav button.on{background:#fff;color:#1d2433}
-header .who{margin-left:auto;font-size:14px;color:#cfd6e6}
+header .who{font-size:14px;color:#cfd6e6}
 main{max-width:1020px;margin:16px auto;padding:0 12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
 h2{margin:0 0 8px;font-size:20px}
@@ -80,12 +80,60 @@ textarea{width:100%;min-height:140px;font:13px ui-monospace,monospace}
 .gamecard:hover{border-color:var(--acc)}
 .choice{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
 .choice button.on{outline:3px solid var(--sel)}
+
+/* ---- story, avatars, rewards ---- */
+#stats{display:flex;align-items:center;gap:10px;color:#fff;font-size:13px;margin-left:auto}
+#stats .rk{font-weight:600}
+.xpbar{height:6px;width:120px;background:#3a4560;border-radius:9px;overflow:hidden;margin-top:3px}
+.xpbar.wide{width:100%;background:#e6e9f2;height:8px;margin:6px 0 2px}
+.xpbar i{display:block;height:100%;background:linear-gradient(90deg,#f1c40f,#f39c12);border-radius:9px;transition:width .6s}
+.coin{color:#f1c40f;font-weight:700}
+.flame{color:#ffb36b;font-weight:700}
+.banner{display:flex;gap:14px;align-items:center;border-radius:12px;padding:12px 16px;margin-bottom:12px;background:linear-gradient(135deg,color-mix(in srgb,var(--rc) 18%,#fff),#fff);border:1px solid color-mix(in srgb,var(--rc) 35%,#fff)}
+.bicon{font-size:38px;line-height:1}
+.btitle{font-size:21px;font-weight:700;color:var(--rc)}
+.bsub{font-size:14px;color:var(--mute)}
+.region{cursor:pointer;border-top:6px solid var(--rc)}
+.region:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.region .bicon{font-size:44px}
+.avatars{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.avbtn{background:#fff;border:2px solid var(--line);border-radius:12px;padding:6px 8px;cursor:pointer;text-align:center}
+.avbtn:hover{border-color:var(--acc)}
+.avbtn.on{border-color:var(--sel);background:#fff8e6}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.bdg{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:13px;background:#fff}
+.bdg .medal{width:28px;height:28px;font-size:16px}
+.bdg.locked{opacity:.4;filter:grayscale(1)}
+.medal{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffe58a,#f1a90f);color:#7a4b00;display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+#companion{position:fixed;right:14px;bottom:14px;display:flex;align-items:flex-end;gap:6px;z-index:50;pointer-events:none}
+#companion .bubble{background:#fff;border:2px solid var(--line);border-radius:14px 14px 2px 14px;padding:8px 12px;max-width:230px;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,.1)}
+#companion.bounce svg{animation:bounce .5s}
+@keyframes bounce{0%{transform:translateY(0)}40%{transform:translateY(-12px)}100%{transform:translateY(0)}}
+#toasts{position:fixed;top:100px;right:14px;z-index:60;display:flex;flex-direction:column;gap:8px}
+.toast{background:#fff;border:1px solid var(--line);border-left:5px solid #f1a90f;border-radius:10px;padding:10px 12px;box-shadow:0 6px 18px rgba(0,0,0,.12);transition:opacity .5s,transform .5s;animation:slidein .4s}
+.toast.out{opacity:0;transform:translateX(30px)}
+.toastin{display:flex;gap:10px;align-items:center}
+@keyframes slidein{from{transform:translateX(40px);opacity:0}}
+.floatxp{position:fixed;left:50%;top:40%;transform:translateX(-50%);font:800 30px system-ui;color:#f39c12;text-shadow:0 2px 0 #fff;z-index:70;animation:floatup 1.4s forwards;pointer-events:none}
+@keyframes floatup{to{top:25%;opacity:0}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:65;overflow:hidden}
+.confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{top:105%;transform:rotate(720deg)}}
+.overlay{position:fixed;inset:0;background:rgba(20,26,40,.55);z-index:80;display:flex;align-items:center;justify-content:center;padding:16px}
+.story{background:#fffdf6;border:3px solid #e8d9a8;border-radius:16px;max-width:460px;padding:20px 24px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.3);animation:pop .35s}
+.story p{font-size:16px;line-height:1.5}
+@keyframes pop{from{transform:scale(.85);opacity:0}}
+.intro{background:linear-gradient(135deg,#1d2433,#34406a);color:#fff;border:0}
+.intro p{color:#dfe4f2}
+@media(max-width:600px){#companion .bubble{display:none}#companion svg{width:48px;height:48px}}
+@media (prefers-reduced-motion: reduce){.confetti,.floatxp{display:none}#companion.bounce svg{animation:none}}
 </style>
 </head>
 <body>
 <header>
   <h1>Discrete Math Games</h1>
   <nav id="nav"></nav>
+  <div id="stats"></div>
   <div class="who" id="who"></div>
 </header>
 <main id="app"></main>
@@ -123,9 +171,17 @@ function S(tag, attrs, ...kids) {
   for (const k of kids.flat()) { if (k == null) continue; e.append(k.nodeType ? k : document.createTextNode(String(k))); }
   return e;
 }
-const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
-const pick = a => a[Math.floor(Math.random() * a.length)];
-const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+/* Random source. Normal play uses Math.random; setSeed(n) switches to a seeded
+   generator (mulberry32) so that self-test runs can be repeated exactly. */
+let rand = Math.random;
+function setSeed(seed) {
+  if (seed == null) { rand = Math.random; return; }
+  let a = seed >>> 0;
+  rand = () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+const ri = (a, b) => a + Math.floor(rand() * (b - a + 1));
+const pick = a => a[Math.floor(rand() * a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const uid = () => Math.random().toString(36).slice(2, 8);
 const arrEq = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
 const clone = o => JSON.parse(JSON.stringify(o));
@@ -216,12 +272,12 @@ class Tracker {
     Object.assign(this, { game, mode, level, puzzle, source: source || 'generator', focus: focus || '', id: game[0] + '-' + uid(), n: 0, errors: 0, t0: performance.now(), done: false });
   }
   attempt(correct, sub, response, expected, detail) {
-    this.n++; if (!correct) { this.errors++; if (sub) noteError(this.game, sub); }
+    this.n++; if (!correct) { this.errors++; if (sub) noteError(this.game, sub); Fun.onMiss(); }
     Log.add({ kind: 'attempt', game: this.game, mode: this.mode, level: this.level, puzzle_id: this.id, source: this.source, focus: this.focus,
       puzzle: this.puzzle, attempt_no: this.n, correct: correct ? 1 : 0, misconception: correct ? '' : codeOf(sub), subtype: sub || '',
       response, expected, time_ms: Math.round(performance.now() - this.t0), detail: detail || '' });
   }
-  complete() { if (this.done) return ''; this.done = true; return finishPuzzle(this.game, this.errors); }
+  complete() { if (this.done) return ''; this.done = true; const lv = finishPuzzle(this.game, this.errors); Fun.onSolve(this, performance.now() - this.t0); return lv; }
   skip() { if (this.done) return; this.done = true; Log.add({ kind: 'skip', game: this.game, mode: this.mode, level: this.level, puzzle_id: this.id, source: this.source, puzzle: this.puzzle, attempt_no: this.n, time_ms: Math.round(performance.now() - this.t0) }); }
 }
 
@@ -234,7 +290,7 @@ function generate(game, mode, level, focus, make, validate, max = 600) {
   while (n < max) {
     n++;
     let c, reasons;
-    try { c = make(); reasons = c ? validate(c) : ['no-candidate']; } catch (err) { reasons = ['exception:' + err.message]; }
+    try { c = make(); reasons = c ? [...new Set(validate(c))] : ['no-candidate']; } catch (err) { reasons = ['exception:' + err.message]; }
     if (!reasons.length) {
       Log.add({ kind: 'gen', game, mode, level, source: 'generator', focus: focus || '', correct: 1, candidates: n, rejects: fmtRejects(rejects) });
       return c;
@@ -335,7 +391,7 @@ function equivalent(a, b) {
   const vars = [...new Set(nodesOf(a).concat(nodesOf(b)).filter(n => !n.op && /[A-Za-z]/.test(n.v)).map(n => n.v))];
   let finite = 0;
   for (let k = 0; k < 12; k++) {
-    const env = Object.fromEntries(vars.map(v => [v, 1.1 + 1.5 * Math.random()]));
+    const env = Object.fromEntries(vars.map(v => [v, 1.1 + 1.5 * rand()]));
     const x = evalReal(a, env), y = evalReal(b, env);
     if (!isFinite(x) || !isFinite(y)) { if (isFinite(x) !== isFinite(y)) return false; continue; }
     finite++;
@@ -404,6 +460,8 @@ function makeExprPuzzle(mode, fmtPref) {
     const t = generate('expr', mode, level, focus, () => randExprTree(nOps(), L.set, letterLabels), t => {
       const r = exprCoreChecks(t, full);
       if (fmt === 'infix' && !full && !flatDiffers(t) && !rassocDiffers(t)) r.push('precedence-irrelevant');
+      // fully parenthesized infix, prefix and postfix: an operand-order error (M2) must change the tree
+      if ((fmt !== 'infix' || full) && !hasNonCommDistinct(t)) r.push('operand-order-irrelevant');
       if (focus === 'precedence' && !flatDiffers(t)) r.push('focus-unmet');
       if (focus === 'associativity' && !rassocDiffers(t)) r.push('focus-unmet');
       if (focus === 'operand-order' && !hasNonCommDistinct(t)) r.push('focus-unmet');
@@ -416,7 +474,9 @@ function makeExprPuzzle(mode, fmtPref) {
   } else if (mode === 'traverse') {
     const order = focus ? pick(['preorder', 'postorder']) : pick(['preorder', 'inorder', 'postorder']);
     const t = generate('expr', mode, level, focus, () => randExprTree(Math.max(3, nOps()), L.set, letterLabels), t => {
-      const r = exprCoreChecks(t, false); if (seenKey('expr', infix(t))) r.push('duplicate'); return r;
+      const r = exprCoreChecks(t, false);
+      if (!traversalDiscriminates(t, order)) r.push('traversal-irrelevant');
+      if (seenKey('expr', infix(t))) r.push('duplicate'); return r;
     });
     if (!t) return null;
     P = { mode, order, tree: t, focus, level };
@@ -516,6 +576,12 @@ const TRAV = {
   postorder: n => n.op ? [...TRAV.postorder(n.l), ...TRAV.postorder(n.r), n] : [n]
 };
 const travMirror = (k, n) => k === 'preorder' ? (n.op ? [n, ...travMirror(k, n.r), ...travMirror(k, n.l)] : [n]) : k === 'inorder' ? (n.op ? [...travMirror(k, n.r), n, ...travMirror(k, n.l)] : [n]) : (n.op ? [...travMirror(k, n.r), ...travMirror(k, n.l), n] : [n]);
+/* A traversal puzzle discriminates if the requested order differs from every confusion we diagnose (M3). */
+function traversalDiscriminates(t, order) {
+  const want = TRAV[order](t), alts = ['preorder', 'inorder', 'postorder'].filter(k => k !== order).map(k => TRAV[k](t));
+  alts.push(travMirror(order, t), want.slice().reverse());
+  return alts.every(a => !arrEq(a, want));
+}
 function diagnoseTraversal(seq, P) {
   const want = TRAV[P.order](P.tree);
   if (arrEq(seq, want)) return { ok: true };
@@ -609,13 +675,13 @@ function randGraph(n, extraP) {
   const diag = cand.filter(e => e[2]), keep = new Set(cand);
   for (const a of diag) for (const b of diag) if (a !== b && keep.has(a) && keep.has(b)) {
     const [ra1, ca1] = rc(cells[a[0]]), [ra2, ca2] = rc(cells[a[1]]), [rb1, cb1] = rc(cells[b[0]]), [rb2, cb2] = rc(cells[b[1]]);
-    if (Math.min(ra1, ra2) === Math.min(rb1, rb2) && Math.min(ca1, ca2) === Math.min(cb1, cb2)) keep.delete(Math.random() < .5 ? a : b);
+    if (Math.min(ra1, ra2) === Math.min(rb1, rb2) && Math.min(ca1, ca2) === Math.min(cb1, cb2)) keep.delete(rand() < .5 ? a : b);
   }
   const edges = shuffle([...keep]);
   const parent = [...Array(n).keys()], find = x => parent[x] === x ? x : (parent[x] = find(parent[x]));
   const E = [];
   for (const e of edges) { const a = find(e[0]), b = find(e[1]); if (a !== b) { parent[a] = b; E.push(e); } }
-  for (const e of edges) if (!E.includes(e) && Math.random() < extraP) E.push(e);
+  for (const e of edges) if (!E.includes(e) && rand() < extraP) E.push(e);
   const labels = shuffle('ABCDEFGHIJ'.split('').slice(0, n));
   const pos = {};
   cells.forEach((c, i) => { const [r, cc] = rc(c); pos[labels[i]] = [70 + cc * 125 + ri(-16, 16), 50 + r * 105 + ri(-12, 12)]; });
@@ -737,6 +803,7 @@ function makeEulerPuzzle() {
     if (!connected(G)) r.push('disconnected');
     if (G.E.length < G.V.length || G.E.length > 14) r.push('edge-count');
     if (eulerClass(G) !== target) r.push('category-mismatch');
+    else if (target === 'path' && !G.V.some(v => degreeOf(G, v) % 2 === 0)) r.push('start-irrelevant');
     const key = G.E.map(e => e.join('')).sort().join(','); if (seenKey('euler', key)) r.push('duplicate');
     return r;
   }, 3000);
@@ -753,13 +820,17 @@ let current = null; // active tracker (skipped if the student leaves mid-puzzle)
 function go(page) {
   if (current && !current.done) current.skip(); current = null;
   if (page !== 'home' && page !== 'instructor' && !State.sid) page = 'home';
-  State.page = page; renderNav(); app.replaceChildren();
+  if (State.sid && (!Fun.p || Fun.loadedFor !== State.sid)) { Fun.load(); Fun.loadedFor = State.sid; }
+  if (page !== 'home' && page !== 'instructor' && Fun.p && !Fun.p.avatar) page = 'home';
+  State.page = page; renderNav(); renderStats(); app.replaceChildren();
   ({ home: Home, expr: ExprPage, bfsdfs: GraphPage, euler: EulerPage, instructor: Instructor })[page]();
+  if (REGIONS[page] && Fun.p && Fun.p.avatar) { companion('happy', pick(['Let\'s go!', 'Ready when you are.', 'I believe in you!', 'Adventure awaits!'])); Fun.checkChapter(page); }
+  else hideCompanion();
   window.scrollTo(0, 0);
 }
 function renderNav() {
   $('#nav').replaceChildren(...PAGES.map(([k, t]) => h('button', { class: State.page === k ? 'on' : '', onclick: () => go(k) }, t)));
-  $('#who').replaceChildren(State.sid ? h('span', {}, 'ID: ', h('b', {}, State.sid), ' ', h('button', { class: 'btn ghost', style: 'padding:2px 8px;font-size:13px', onclick: () => { State.sid = ''; localStorage.removeItem('dmg_sid'); go('home'); } }, 'Switch')) : '');
+  $('#who').replaceChildren(State.sid ? h('span', {}, 'ID: ', h('b', {}, State.sid), ' ', h('button', { class: 'btn ghost', style: 'padding:2px 8px;font-size:13px', onclick: () => { State.sid = ''; Fun.p = null; localStorage.removeItem('dmg_sid'); go('home'); } }, 'Switch')) : '');
 }
 function levelBar(game, extra) {
   return h('div', { class: 'bar' }, h('span', { class: 'pill' }, 'Level ' + getLevel(game) + ' of 4'), extra || '', h('span', { class: 'small' }, 'Levels adjust automatically as you play.'));
@@ -782,8 +853,10 @@ function Home() {
       go('home');
     };
     idIn.addEventListener('keydown', e => { if (e.key === 'Enter') start(); });
-    app.append(h('div', { class: 'card' },
-      h('h2', {}, 'Welcome'),
+    app.append(h('div', { class: 'card intro' }, h('h2', {}, 'The Kingdom of Nodeland needs you'),
+      h('p', {}, 'Nodeland has gone dark. The calculating engines of the Clockwork Forge are scrambled, the Lantern Caverns are unlit, and nobody remembers how to walk the Bridge Isles festival. Only an apprentice who understands trees and graphs can restore it.')),
+      h('div', { class: 'card' },
+      h('h2', {}, 'Sign in'),
       h('p', {}, 'Type your anonymous code. Use the same code all week, on paper and here: first two letters of your mother\'s (or a guardian\'s) first name, your birth day (two digits), and the last two digits of your phone number. Example: ', h('code', {}, 'MA0742'), '.'),
       h('p', {}, idIn),
       h('p', {}, h('b', {}, 'Research consent. '), 'Everyone plays the games as coursework. Your choice only decides whether your anonymous game data is analyzed for research. It does not affect your grade.'),
@@ -793,12 +866,28 @@ function Home() {
     setTimeout(() => idIn.focus(), 0);
     return;
   }
+  if (!Fun.p.avatar) {
+    app.append(h('div', { class: 'card' }, h('h2', {}, 'Choose your companion'),
+      h('p', {}, 'A companion travels with you, cheers you on and helps you remember what went wrong. You can change companions later.'),
+      avatarPicker(id => { Fun.p.avatar = id; Fun.save(); Log.add({ kind: 'profile', detail: 'avatar=' + id }); storyCard(AVATARS[id].name + ' joins you!', AVATARS[id].line + ' "Let\'s bring the light back to Nodeland. Pick a region on the map to begin."', 'happy'); go('home'); })));
+    return;
+  }
   const games = [
     ['expr', 'Expression Trees', 'Build trees from infix, prefix or postfix; click traversals; spot the error; evaluate.'],
     ['bfsdfs', 'BFS vs DFS Explorer', 'Run breadth-first or depth-first search one vertex at a time, with the queue or stack in view.'],
     ['euler', 'Euler Path Hunter', 'Decide from vertex degrees whether an Euler path or circuit exists, then trace it.']
   ];
-  app.append(h('div', { class: 'grid3' }, games.map(([k, t, d]) => h('div', { class: 'card gamecard', onclick: () => go(k) }, h('h2', {}, t), h('p', { class: 'small' }, d), h('span', { class: 'pill' }, 'Level ' + getLevel(k))))));
+  const r = Fun.rank();
+  app.append(h('div', { class: 'card intro', style: 'display:flex;gap:16px;align-items:center' }, avatarSVG(Fun.p.avatar, 'happy', 84),
+    h('div', {}, h('h2', {}, `${r.name} ${State.sid}, with ${AVATARS[Fun.p.avatar].name}`),
+      h('p', {}, r.next ? `${Fun.p.xp} XP. ${r.next[0] - Fun.p.xp} more XP to become ${r.next[1]}.` : `${Fun.p.xp} XP. You have reached the highest rank!`, ` Best streak: ${Fun.p.best}. Coins: ${Fun.p.coins}.`))));
+  app.append(h('div', { class: 'grid3' }, games.map(([k, t, d]) => { const R = REGIONS[k], c = regionChapter(k); return h('div', { class: 'card gamecard region', style: `--rc:${R.color}`, onclick: () => go(k) },
+    h('div', { class: 'bicon' }, R.icon), h('div', { class: 'btitle' }, R.name), h('div', { style: 'font-weight:600' }, t), h('p', { class: 'small' }, d),
+    h('div', { class: 'xpbar wide' }, h('i', { style: `width:${Math.min(100, Math.round(100 * c.n / c.max))}%;background:${R.color}` })),
+    h('div', { class: 'small' }, c.title), h('span', { class: 'pill' }, 'Level ' + getLevel(k))); })));
+  app.append(h('div', { class: 'card' }, h('h3', {}, `Badges (${Fun.p.badges.length} of ${Object.keys(BADGES).length})`),
+    h('div', { class: 'badges' }, Object.entries(BADGES).map(([id, [n, d]]) => h('div', { class: 'bdg' + (Fun.p.badges.includes(id) ? '' : ' locked'), title: d }, h('div', { class: 'medal' }, '★'), h('div', {}, h('b', {}, n), h('div', { class: 'small' }, d)))))));
+  app.append(h('div', { class: 'card' }, h('h3', {}, 'Change companion'), avatarPicker(id => { Fun.p.avatar = id; Fun.save(); Log.add({ kind: 'profile', detail: 'avatar=' + id }); go('home'); }, Fun.p.avatar)));
   const mine = Log.all().filter(r => r.student === State.sid);
   const solved = mine.filter(r => r.kind === 'attempt' && r.correct == 1).length;
   app.append(h('div', { class: 'card' }, h('h3', {}, 'My data'),
@@ -814,7 +903,7 @@ function ExprPage() {
   const tabs = h('div', { class: 'tabs' }, modes.map(([k, t]) => h('button', { class: ExprUI.mode === k ? 'on' : '', onclick: () => { ExprUI.mode = k; go('expr'); } }, t)));
   const fmtSel = h('select', { onchange: e => { ExprUI.fmt = e.target.value; go('expr'); } }, ['mixed', 'infix', 'prefix', 'postfix'].map(f => h('option', { value: f, selected: ExprUI.fmt === f }, 'Source: ' + f)));
   const stage = h('div', {});
-  app.append(h('div', { class: 'card' }, h('h2', {}, 'Expression Trees'), tabs, levelBar('expr', ExprUI.mode === 'build' ? fmtSel : ''), stage));
+  app.append(h('div', { class: 'card' }, regionBanner('expr'), h('h2', {}, 'Expression Trees'), tabs, levelBar('expr', ExprUI.mode === 'build' ? fmtSel : ''), stage));
   newExpr(stage);
 }
 function newExpr(stage) {
@@ -923,7 +1012,7 @@ const GraphUI = { algo: 'mixed' };
 function GraphPage() {
   const tabs = h('div', { class: 'tabs' }, [['mixed', 'Mixed'], ['bfs', 'BFS only'], ['dfs', 'DFS only']].map(([k, t]) => h('button', { class: GraphUI.algo === k ? 'on' : '', onclick: () => { GraphUI.algo = k; go('bfsdfs'); } }, t)));
   const stage = h('div', {});
-  app.append(h('div', { class: 'card' }, h('h2', {}, 'BFS vs DFS Explorer'), tabs, levelBar('bfsdfs'), stage));
+  app.append(h('div', { class: 'card' }, regionBanner('bfsdfs'), h('h2', {}, 'BFS vs DFS Explorer'), tabs, levelBar('bfsdfs'), stage));
   newGraph(stage);
 }
 function newGraph(stage) {
@@ -981,7 +1070,7 @@ function newGraph(stage) {
 /* ---------------- Euler page ---------------- */
 function EulerPage() {
   const stage = h('div', {});
-  app.append(h('div', { class: 'card' }, h('h2', {}, 'Euler Path Hunter'), levelBar('euler'), stage));
+  app.append(h('div', { class: 'card' }, regionBanner('euler'), h('h2', {}, 'Euler Path Hunter'), levelBar('euler'), stage));
   newEuler(stage);
 }
 function newEuler(stage) {
@@ -1138,6 +1227,7 @@ function validatePackItem(p) {
     const numeric = nodesOf(t).every(n => n.op || /^\d+$/.test(n.v));
     if ((p.mode === 'evaluate' || p.value != null) && !numeric) r.push('evaluate-needs-numbers');
     if (numeric && (p.mode === 'evaluate' || p.value != null)) { try { const v = evalInt(t); if (p.value != null && +p.value !== v) r.push('value-mismatch (should be ' + v + ')'); } catch (e) { r.push(e.message); } }
+    if (!r.length) r.push(...packDiscrimination(p, t));
     if (p.mode && !['build', 'traverse', 'evaluate'].includes(p.mode)) r.push('unknown-mode');
     if (p.format && !['infix', 'prefix', 'postfix'].includes(p.format)) r.push('unknown-format');
     if (p.order && !['preorder', 'inorder', 'postorder'].includes(p.order)) r.push('unknown-order');
@@ -1146,7 +1236,8 @@ function validatePackItem(p) {
     const G = { V: p.vertices.map(String), E: p.edges.map(e => e.map(String)) };
     if (G.V.length > 12) r.push('too-many-vertices');
     if (p.game === 'bfsdfs') {
-      r.push(...validateBfsDfsGraph(G, p.start).filter(x => x !== 'too-few-decisions'));
+      r.push(...validateBfsDfsGraph(G, p.start));
+      if (G.E.length < G.V.length) r.push('too-sparse');
       if (!r.length) {
         if (p.bfs_order && !arrEq(p.bfs_order, simBFS(G, p.start).order)) r.push('bfs-order-mismatch (should be ' + simBFS(G, p.start).order.join(' ') + ')');
         if (p.dfs_order && !arrEq(p.dfs_order, simDFS(G, p.start).order)) r.push('dfs-order-mismatch (should be ' + simDFS(G, p.start).order.join(' ') + ')');
@@ -1159,6 +1250,7 @@ function validatePackItem(p) {
       if (!r.length) {
         const c = eulerClass(G);
         if (p.claim && p.claim !== c) r.push('claim-mismatch (degrees say ' + c + ')');
+        if (c === 'path' && !G.V.some(v => degreeOf(G, v) % 2 === 0)) r.push('start-irrelevant');
         if (Array.isArray(p.example)) {
           const used = new Set(); let okWalk = true;
           for (let i = 1; i < p.example.length; i++) { const k = ekey(p.example[i - 1], p.example[i]); if (!ek.has(k) || used.has(k)) { okWalk = false; break; } used.add(k); }
@@ -1169,6 +1261,23 @@ function validatePackItem(p) {
     }
   } else r.push('unknown-game');
   return [...new Set(r)];
+}
+/* Discrimination checks for pack expressions, mirroring the generators. */
+function packDiscrimination(p, t) {
+  const mode = p.mode || (p.value != null ? 'evaluate' : 'build'), fmt = p.format || (mode === 'evaluate' ? 'postfix' : 'infix'), r = [];
+  const flatD = () => { try { return !eq(parseInfix(p.infix, 'flat'), t); } catch { return false; } };
+  const rassocD = () => { try { return !eq(parseInfix(p.infix, 'rassoc'), t); } catch { return false; } };
+  if (mode === 'build') {
+    if (fmt === 'infix' && !flatD() && !rassocD() && !hasNonCommDistinct(t)) r.push('non-discriminating (no misreading changes the tree)');
+    if (fmt !== 'infix' && !hasNonCommDistinct(t)) r.push('non-discriminating (operand order cannot matter)');
+  } else if (mode === 'evaluate') {
+    let val; try { val = evalInt(t); } catch { return r; }
+    if (fmt === 'infix') { const alts = []; for (const m of ['flat', 'rassoc']) { try { alts.push(evalReal(parseInfix(p.infix, m), {})); } catch { } } if (alts.every(a => a === val)) r.push('non-discriminating (misreadings give the same value)'); }
+    else if (evalReal(mirror(t), {}) === val) r.push('non-discriminating (swapped operands give the same value)');
+  } else if (mode === 'traverse') {
+    if (!t.op || !traversalDiscriminates(t, p.order || 'preorder')) r.push('traversal-irrelevant');
+  }
+  return r;
 }
 function validatePack(text, out) {
   let arr; try { arr = JSON.parse(text || PACK_EXAMPLE); if (!Array.isArray(arr)) throw Error('top level must be a JSON array'); } catch (e) { out.replaceChildren(h('div', { class: 'fb bad' }, 'JSON error: ' + e.message)); return; }
@@ -1190,43 +1299,378 @@ function copyBtn(label, text) {
 const b64 = s => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
 const unb64 = s => new TextDecoder().decode(Uint8Array.from(atob(s), c => c.charCodeAt(0)));
 
-/* Self-test: generate many puzzles and re-verify each with independent checks. */
-function selfTest(N) {
+/* Self-test: generate many puzzles with a fixed seed and re-verify each one with an
+   independent oracle (Indep below). The oracle shares no parser, evaluator, traversal or
+   graph code with the generators and validators, and it re-checks discrimination too. */
+function selfTest(N, seed = 20261115) {
   const saveLog = localStorage.getItem(LOGKEY), saveLv = { ...State.levels }, saveRecent = State.recent; const lines = []; let fails = 0;
-  State.recent = {};
+  const why = {}; const fail = (k) => { why[k] = (why[k] || 0) + 1; return 1; };
+  State.recent = {}; setSeed(seed);
+  try {
   for (const lv of [1, 2, 3, 4]) {
     State.levels.expr = State.levels.bfsdfs = State.levels.euler = lv;
     for (const mode of ['build', 'traverse', 'spot', 'evaluate']) {
       let bad = 0;
       for (let i = 0; i < N / 4; i++) {
-        const P = makeExprPuzzle(mode, 'mixed'); if (!P) { bad++; continue; }
-        if (!checkStructure(P.tree)) bad++;
-        if (mode === 'build') { const back = P.fmt === 'infix' ? parseInfix(P.src) : P.fmt === 'prefix' ? parsePrefix(P.src) : parsePostfix(P.src); if (!eq(back, P.tree)) bad++; if (!diagnoseBuild(clone(P.tree), P).ok) bad++; }
-        if (mode === 'spot' && (equivalent(P.tree, P.wrong) || !P.errNode)) bad++;
-        if (mode === 'evaluate') { const back = P.fmt === 'infix' ? parseInfix(P.src) : P.fmt === 'prefix' ? parsePrefix(P.src) : parsePostfix(P.src); if (evalInt(back) !== P.value || !diagnoseEval(P.value, P).ok) bad++; }
-        if (mode === 'traverse' && !diagnoseTraversal(TRAV[P.order](P.tree), P).ok) bad++;
+        const P = makeExprPuzzle(mode, 'mixed'); if (!P) { bad += fail('no-puzzle'); continue; }
+        const T = Indep.ser(P.tree);
+        if (mode === 'build') {
+          let back; try { back = Indep.parse(P.src, P.fmt); } catch { back = null; }
+          if (!back || Indep.ser(back) !== T) bad += fail('build-parse');
+          else if (!Indep.buildDiscriminates(P)) bad += fail('build-discrimination');
+          else if (!diagnoseBuild(clone(P.tree), P).ok) bad += fail('build-key');
+        }
+        if (mode === 'traverse') {
+          const want = Indep.order(P.tree, P.order);
+          if (!Indep.traversalDiscriminates(P.tree, P.order)) bad += fail('traverse-discrimination');
+          else if (!diagnoseTraversal(want, P).ok) bad += fail('traverse-key');
+        }
+        if (mode === 'spot') {
+          if (!P.errNode || Indep.ser(P.wrong) === T || Indep.sameFunction(P.tree, P.wrong)) bad += fail('spot-discrimination');
+        }
+        if (mode === 'evaluate') {
+          let v; try { v = Indep.value(Indep.parse(P.src, P.fmt)); } catch { v = NaN; }
+          if (v !== P.value) bad += fail('evaluate-value');
+          else if (!Indep.evalDiscriminates(P)) bad += fail('evaluate-discrimination');
+          else if (!diagnoseEval(P.value, P).ok) bad += fail('evaluate-key');
+        }
       }
       fails += bad; lines.push(`expr L${lv} ${mode}: ${N / 4} generated, ${bad} failed re-check`);
     }
     for (const algo of ['bfs', 'dfs']) {
       let bad = 0;
-      for (let i = 0; i < N / 4; i++) { const P = makeBfsDfsPuzzle(algo); if (!P || !connected(P.G) || arrEq(simBFS(P.G, P.s).order, simDFS(P.G, P.s).order) || simBFS(P.G, P.s).order.length !== P.G.V.length) bad++; }
+      for (let i = 0; i < N / 4; i++) {
+        const P = makeBfsDfsPuzzle(algo); if (!P) { bad += fail('no-puzzle'); continue; }
+        const M = Indep.matrix(P.G);
+        if (!M || !Indep.connected(M)) { bad += fail('graph-connected'); continue; }
+        const b = Indep.bfs(M, P.s), d = Indep.dfs(M, P.s);
+        if (!arrEq(b, simBFS(P.G, P.s).order) || !arrEq(d, simDFS(P.G, P.s).order)) bad += fail('graph-key');
+        else if (arrEq(b, d)) bad += fail('graph-discrimination');
+      }
       fails += bad; lines.push(`graph L${lv} ${algo}: ${N / 4} generated, ${bad} failed re-check`);
     }
     let bad = 0;
-    for (let i = 0; i < N / 4; i++) { const P = makeEulerPuzzle(); if (!P || !connected(P.G) || eulerClass(P.G) !== P.cls || (P.cls !== 'none' && !hierholzer(P.G))) bad++; }
+    for (let i = 0; i < N / 4; i++) {
+      const P = makeEulerPuzzle(); if (!P) { bad += fail('no-puzzle'); continue; }
+      const M = Indep.matrix(P.G);
+      if (!M || !Indep.connected(M)) { bad += fail('euler-connected'); continue; }
+      const odd = M.deg.filter(x => x % 2).length, cls = odd === 0 ? 'circuit' : odd === 2 ? 'path' : 'none';
+      if (cls !== P.cls) bad += fail('euler-class');
+      else if (cls !== 'none' && !hierholzer(P.G)) bad += fail('euler-walk');
+      else if (cls === 'path' && !M.deg.some(x => x % 2 === 0)) bad += fail('euler-discrimination');
+    }
     fails += bad; lines.push(`euler L${lv}: ${N / 4} generated, ${bad} failed re-check`);
   }
-  if (saveLog == null) localStorage.removeItem(LOGKEY); else localStorage.setItem(LOGKEY, saveLog);
-  State.levels = saveLv; localStorage.setItem('dmg_levels', JSON.stringify(saveLv)); State.recent = saveRecent;
-  return (fails ? `FAILURES: ${fails}\n` : 'All puzzles passed independent re-checks.\n') + lines.join('\n');
+  } finally {
+    setSeed(null);
+    if (saveLog == null) localStorage.removeItem(LOGKEY); else localStorage.setItem(LOGKEY, saveLog);
+    State.levels = saveLv; localStorage.setItem('dmg_levels', JSON.stringify(saveLv)); State.recent = saveRecent;
+  }
+  const head = `Seed ${seed}. ` + (fails ? `FAILURES: ${fails} (${Object.entries(why).map(([k, v]) => k + ' ' + v).join(', ')})\n` : 'All puzzles passed the independent re-checks.\n');
+  return head + lines.join('\n');
 }
+/* Independent oracle for the self-test. Written separately from the game code above:
+   a recursive-descent (precedence-climbing) infix parser, its own prefix/postfix readers,
+   evaluator, traversals, and adjacency-matrix BFS/DFS. Trees are compared as strings. */
+const Indep = (() => {
+  const PREC = { '+': 1, '-': 1, '*': 2, '/': 2, '^': 3 }, NONCOMM = new Set(['-', '/', '^']);
+  const toks = str => String(str).replace(/\s+/g, '').split(/(\d+|[A-Za-z]|[-+*/^()])/).filter(Boolean);
+  const ser = n => n.op ? '(' + ser(n.l) + n.op + ser(n.r) + ')' : String(n.v);
+  // style: 'std' (real rules), 'flat' (one precedence, left to right), 'rassoc' (same level groups from the right)
+  function infix(str, style = 'std') {
+    const T = toks(str); let i = 0;
+    const prec = o => style === 'flat' ? 1 : PREC[o];
+    const rightAssoc = o => style === 'rassoc' || (style === 'std' && o === '^');
+    function atom() {
+      const t = T[i++];
+      if (t === '(') { const e = expr(1); if (T[i++] !== ')') throw Error('paren'); return e; }
+      if (t === undefined || PREC[t] || t === ')') throw Error('operand expected');
+      return { v: t };
+    }
+    function expr(minP) {
+      let left = atom();
+      while (i < T.length && PREC[T[i]] && prec(T[i]) >= minP) {
+        const o = T[i++]; const right = expr(rightAssoc(o) ? prec(o) : prec(o) + 1);
+        left = { op: o, l: left, r: right };
+      }
+      return left;
+    }
+    const e = expr(1); if (i !== T.length) throw Error('trailing'); return e;
+  }
+  function prefix(str) {
+    const T = str.trim().split(/\s+/); let i = 0;
+    const rd = () => { const t = T[i++]; if (t === undefined) throw Error('short'); return PREC[t] ? { op: t, l: rd(), r: rd() } : { v: t }; };
+    const e = rd(); if (i !== T.length) throw Error('long'); return e;
+  }
+  function postfix(str) {
+    const st = [];
+    for (const t of str.trim().split(/\s+/)) { if (PREC[t]) { const r = st.pop(), l = st.pop(); if (!l || !r) throw Error('short'); st.push({ op: t, l, r }); } else st.push({ v: t }); }
+    if (st.length !== 1) throw Error('long'); return st[0];
+  }
+  const parse = (src, fmt) => fmt === 'prefix' ? prefix(src) : fmt === 'postfix' ? postfix(src) : infix(src);
+  function value(n, env = {}) {
+    if (!n.op) return /^\d+$/.test(n.v) ? Number(n.v) : env[n.v];
+    const a = value(n.l, env), b = value(n.r, env);
+    return n.op === '+' ? a + b : n.op === '-' ? a - b : n.op === '*' ? a * b : n.op === '/' ? a / b : a ** b;
+  }
+  const leaves = n => n.op ? [...leaves(n.l), ...leaves(n.r)] : [n.v];
+  function sameFunction(a, b) {
+    const vars = [...new Set([...leaves(a), ...leaves(b)].filter(v => /[A-Za-z]/.test(v)))];
+    // Same function if they agree at 3+ points where both are real. Points come from a fixed LCG
+    // in [1.05, 2.05); NaN/Infinity points (e.g. a negative base under ^) are skipped.
+    let x0 = 12345, finite = 0;
+    const next = () => { x0 = (x0 * 1103515245 + 12345) % 2147483648; return 1.05 + x0 / 2147483648; };
+    for (let k = 0; k < 40 && finite < 8; k++) {
+      const env = Object.fromEntries(vars.map(v => [v, next()]));
+      const x = value(a, env), y = value(b, env);
+      if (!isFinite(x) || !isFinite(y)) { if (isFinite(x) !== isFinite(y)) return false; continue; }
+      if (Math.abs(x - y) > 1e-9 * Math.max(Math.abs(x), Math.abs(y), 1e-12)) return false;
+      finite++;
+    }
+    return finite >= 3;
+  }
+  const hasSwappable = n => !!n.op && ((NONCOMM.has(n.op) && ser(n.l) !== ser(n.r)) || hasSwappable(n.l) || hasSwappable(n.r));
+  const swapAll = n => n.op ? { op: n.op, l: swapAll(n.r), r: swapAll(n.l) } : n;
+  // Discriminating = at least one diagnosed misreading (M1 flat, M2 right-grouping, M2 operand swap) changes the tree.
+  function buildDiscriminates(P) {
+    if (P.fmt !== 'infix') return hasSwappable(P.tree);
+    const T = ser(P.tree); const mis = s => { try { return ser(infix(P.src, s)); } catch { return T; } };
+    return mis('flat') !== T || mis('rassoc') !== T || hasSwappable(P.tree);
+  }
+  function evalDiscriminates(P) {
+    const v = P.value;
+    if (P.fmt === 'infix') { const alt = s => { try { return value(infix(P.src, s)); } catch { return v; } }; return alt('flat') !== v || alt('rassoc') !== v; }
+    return value(swapAll(P.tree)) !== v;
+  }
+  const ORD = {
+    preorder: n => n.op ? [n, ...ORD.preorder(n.l), ...ORD.preorder(n.r)] : [n],
+    inorder: n => n.op ? [...ORD.inorder(n.l), n, ...ORD.inorder(n.r)] : [n],
+    postorder: n => n.op ? [...ORD.postorder(n.l), ...ORD.postorder(n.r), n] : [n]
+  };
+  const order = (t, k) => ORD[k](t);
+  const same = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
+  // right-before-left versions of each order, visiting the same node objects
+  const MIR = {
+    preorder: n => n.op ? [n, ...MIR.preorder(n.r), ...MIR.preorder(n.l)] : [n],
+    inorder: n => n.op ? [...MIR.inorder(n.r), n, ...MIR.inorder(n.l)] : [n],
+    postorder: n => n.op ? [...MIR.postorder(n.r), ...MIR.postorder(n.l), n] : [n]
+  };
+  function traversalDiscriminates(t, k) {
+    const want = order(t, k), alts = Object.keys(ORD).filter(x => x !== k).map(x => order(t, x));
+    alts.push(MIR[k](t), want.slice().reverse());
+    return alts.every(a => !same(a, want));
+  }
+  function matrix(G) {
+    const V = G.V.slice().sort(), idx = Object.fromEntries(V.map((v, i) => [v, i])), n = V.length;
+    const A = Array.from({ length: n }, () => Array(n).fill(0));
+    for (const [u, w] of G.E) { if (!(u in idx) || !(w in idx) || u === w || A[idx[u]][idx[w]]) return null; A[idx[u]][idx[w]] = A[idx[w]][idx[u]] = 1; }
+    return { V, idx, A, n, deg: A.map(row => row.reduce((x, y) => x + y, 0)) };
+  }
+  function bfs(M, s) {
+    const seen = Array(M.n).fill(false), out = [], q = [M.idx[s]]; seen[M.idx[s]] = true;
+    for (let h = 0; h < q.length; h++) { const u = q[h]; out.push(M.V[u]); for (let w = 0; w < M.n; w++) if (M.A[u][w] && !seen[w]) { seen[w] = true; q.push(w); } }
+    return out;
+  }
+  function dfs(M, s) {
+    const seen = Array(M.n).fill(false), out = [];
+    (function go(u) { seen[u] = true; out.push(M.V[u]); for (let w = 0; w < M.n; w++) if (M.A[u][w] && !seen[w]) go(w); })(M.idx[s]);
+    return out;
+  }
+  const connected = M => bfs(M, M.V[0]).length === M.n;
+  return { ser, parse, value, sameFunction, buildDiscriminates, evalDiscriminates, order, traversalDiscriminates, matrix, bfs, dfs, connected };
+})();
 /* Constructive check that an Euler path/circuit really exists (Hierholzer). */
 function hierholzer(G) {
   const A = adjOf(G), used = new Set(); const odd = G.V.filter(v => A[v].length % 2);
   let start = odd[0] || G.V[0]; const st = [start], walk = [];
   while (st.length) { const v = st.at(-1); const w = A[v].find(x => !used.has(ekey(v, x))); if (w) { used.add(ekey(v, w)); st.push(w); } else walk.push(st.pop()); }
   return walk.length === G.E.length + 1;
+}
+
+/* =========================================================================
+   STORY, AVATARS AND REWARDS (presentation layer only)
+   Nothing here changes puzzles, validation, scoring of answers or the
+   misconception codes. It reads solve/miss events from the Tracker and
+   adds a story, a companion, XP, coins, streaks and badges. Badge and
+   avatar events are logged as their own rows (kind = badge / profile).
+   ========================================================================= */
+const AVATARS = {
+  fox:    { name: 'Ember the Fox',      color: '#f28c38', line: 'Ember loves taking things apart and putting them back together.' },
+  owl:    { name: 'Professor Hoot',     color: '#9a7b5b', line: 'Hoot has read every book in the Archive. Twice.' },
+  robot:  { name: 'Bolt the Robot',     color: '#8fa3b8', line: 'Bolt runs on logic and the occasional battery snack.' },
+  cat:    { name: 'Nova the Cat',       color: '#9b7fd4', line: 'Nova always lands on the right vertex.' },
+  dragon: { name: 'Pip the Dragon',     color: '#5cb88a', line: 'Pip is small, brave and slightly fireproof.' },
+  astro:  { name: 'Cosmo the Explorer', color: '#4a7fd9', line: 'Cosmo has mapped three galaxies and wants a fourth.' }
+};
+function avatarSVG(id, mood = 'happy', size = 64) {
+  const A = AVATARS[id] || AVATARS.fox, c = A.color;
+  const mouth = mood === 'happy' ? 'M40 64 Q50 74 60 64' : mood === 'sad' ? 'M40 70 Q50 62 60 70' : mood === 'wow' ? null : 'M42 67 L58 67';
+  const parts = [];
+  const eyes = (y = 50, r = 5) => [S('circle', { cx: 39, cy: y, r, fill: '#1d2433' }), S('circle', { cx: 61, cy: y, r, fill: '#1d2433' }), S('circle', { cx: 40.5, cy: y - 1.5, r: 1.6, fill: '#fff' }), S('circle', { cx: 62.5, cy: y - 1.5, r: 1.6, fill: '#fff' })];
+  if (id === 'fox') parts.push(S('path', { d: 'M22 40 L28 10 L46 30 Z', fill: c }), S('path', { d: 'M78 40 L72 10 L54 30 Z', fill: c }), S('path', { d: 'M27 36 L30 18 L41 30 Z', fill: '#fff3e6' }), S('path', { d: 'M73 36 L70 18 L59 30 Z', fill: '#fff3e6' }),
+    S('circle', { cx: 50, cy: 55, r: 32, fill: c }), S('ellipse', { cx: 50, cy: 68, rx: 20, ry: 15, fill: '#fff3e6' }), S('circle', { cx: 50, cy: 59, r: 4, fill: '#1d2433' }));
+  if (id === 'owl') parts.push(S('path', { d: 'M24 30 L30 12 L42 26 Z', fill: c }), S('path', { d: 'M76 30 L70 12 L58 26 Z', fill: c }), S('ellipse', { cx: 50, cy: 56, rx: 33, ry: 34, fill: c }), S('ellipse', { cx: 50, cy: 66, rx: 20, ry: 18, fill: '#e9dcc8' }),
+    S('circle', { cx: 39, cy: 48, r: 11, fill: '#fff', stroke: '#e3b23c', 'stroke-width': 3 }), S('circle', { cx: 61, cy: 48, r: 11, fill: '#fff', stroke: '#e3b23c', 'stroke-width': 3 }), S('path', { d: 'M46 56 L54 56 L50 63 Z', fill: '#e3a13c' }));
+  if (id === 'robot') parts.push(S('line', { x1: 50, y1: 8, x2: 50, y2: 22, stroke: '#5d6678', 'stroke-width': 3 }), S('circle', { cx: 50, cy: 8, r: 5, fill: '#e74c3c' }), S('rect', { x: 18, y: 22, width: 64, height: 62, rx: 14, fill: c }),
+    S('rect', { x: 26, y: 36, width: 48, height: 26, rx: 8, fill: '#1d2433' }), S('rect', { x: 12, y: 44, width: 8, height: 18, rx: 3, fill: '#5d6678' }), S('rect', { x: 80, y: 44, width: 8, height: 18, rx: 3, fill: '#5d6678' }));
+  if (id === 'cat') parts.push(S('path', { d: 'M20 44 L24 12 L46 30 Z', fill: c }), S('path', { d: 'M80 44 L76 12 L54 30 Z', fill: c }), S('circle', { cx: 50, cy: 55, r: 32, fill: c }), S('path', { d: 'M47 58 L53 58 L50 62 Z', fill: '#f4a6c0' }),
+    ...[[-1, 60], [-1, 65], [1, 60], [1, 65]].map(([s, y]) => S('line', { x1: 50 + s * 10, y1: y, x2: 50 + s * 30, y2: y + (y === 60 ? -3 : 3), stroke: '#fff', 'stroke-width': 1.5 })));
+  if (id === 'dragon') parts.push(S('path', { d: 'M30 30 L26 8 L42 24 Z', fill: '#f2d16b' }), S('path', { d: 'M70 30 L74 8 L58 24 Z', fill: '#f2d16b' }), S('circle', { cx: 50, cy: 54, r: 32, fill: c }), S('ellipse', { cx: 50, cy: 70, rx: 18, ry: 12, fill: '#a8e0c2' }),
+    S('circle', { cx: 45, cy: 66, r: 2, fill: '#2f6b4c' }), S('circle', { cx: 55, cy: 66, r: 2, fill: '#2f6b4c' }), S('path', { d: 'M50 22 L54 28 L46 28 Z', fill: '#f2d16b' }));
+  if (id === 'astro') parts.push(S('circle', { cx: 50, cy: 52, r: 36, fill: '#f4f6fb', stroke: '#c3cad8', 'stroke-width': 3 }), S('rect', { x: 26, y: 34, width: 48, height: 40, rx: 18, fill: c }),
+    S('rect', { x: 30, y: 38, width: 40, height: 32, rx: 14, fill: '#ffe1c4' }), S('circle', { cx: 80, cy: 26, r: 5, fill: '#e74c3c' }));
+  const eyeY = id === 'robot' ? 49 : id === 'owl' ? 48 : id === 'astro' ? 50 : 48;
+  if (id === 'robot') parts.push(S('rect', { x: 33, y: 44, width: 10, height: 10, rx: 2, fill: mood === 'sad' ? '#f39c12' : '#5ce1e6' }), S('rect', { x: 57, y: 44, width: 10, height: 10, rx: 2, fill: mood === 'sad' ? '#f39c12' : '#5ce1e6' }));
+  else parts.push(...eyes(eyeY, id === 'owl' ? 5 : 4.5));
+  const mouthColor = id === 'robot' ? '#5ce1e6' : '#1d2433';
+  if (mouth) parts.push(S('path', { d: mouth, stroke: mouthColor, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }));
+  else parts.push(S('ellipse', { cx: 50, cy: 68, rx: 5, ry: 6, fill: mouthColor }));
+  if (mood === 'happy') parts.push(S('circle', { cx: 30, cy: 62, r: 5, fill: '#ff8fa3', opacity: .45 }), S('circle', { cx: 70, cy: 62, r: 5, fill: '#ff8fa3', opacity: .45 }));
+  return S('svg', { viewBox: '0 0 100 100', width: size, height: size, class: 'avatar' }, parts);
+}
+
+const REGIONS = {
+  expr: { name: 'The Clockwork Forge', icon: '⚙', color: '#c0762d',
+    blurb: 'The kingdom\'s calculating engines are built from expression trees. Someone scrambled the blueprints. Rebuild them gear by gear.',
+    chapters: [
+      [0, 'Chapter 1: Sparks in the Dark', 'The Forge is silent. Old Master Gearwright hands you a blueprint: "Every engine is a tree. Operators at the joints, numbers and letters at the tips. Build one for me."'],
+      [3, 'Chapter 2: The Precedence Puzzle', '"Careful!" says Gearwright. "Multiplication gears turn before addition gears. Build them in the wrong order and the whole engine spins backwards."'],
+      [8, 'Chapter 3: Saboteur\'s Marks', 'You find engines with one gear secretly swapped. Somebody is tampering with the Forge. Spot every sabotage before the engines start.'],
+      [15, 'Chapter 4: The Great Engine Roars', 'The furnaces blaze again. The Great Engine computes the kingdom\'s harvest in a blink. Gearwright gives you the Forge Key.']] },
+  bfsdfs: { name: 'The Lantern Caverns', icon: '🏮', color: '#3e7a6b',
+    blurb: 'Deep tunnels connect the kingdom. Light them in the right order: a ripple of lanterns (BFS) or a single brave rope line (DFS).',
+    chapters: [
+      [0, 'Chapter 1: Into the Tunnels', 'Cave guide Mossa lights the first lantern. "Ripple-lighters light every tunnel next to them before going farther. Rope-runners follow one tunnel as deep as it goes."'],
+      [3, 'Chapter 2: The Queue and the Rope', '"Ripple-lighters wait in a QUEUE: first to arrive, first to go. Rope-runners keep a STACK: the newest cave is explored first."'],
+      [8, 'Chapter 3: Echoes in the Dark', 'Some caverns loop back on themselves. Mark every visited cave, or you will wander in circles forever.'],
+      [15, 'Chapter 4: A Kingdom of Light', 'Every tunnel glows. Mossa gives you the Lantern Crown, worn by those who never get lost.']] },
+  euler: { name: 'The Bridge Isles', icon: '🌉', color: '#3b63b8',
+    blurb: 'The islanders hold a festival walk that crosses every bridge exactly once. Work out which festivals are possible, then lead the parade.',
+    chapters: [
+      [0, 'Chapter 1: The Festival Walk', 'Mayor Tidewell unrolls a map of islands and bridges. "Can our parade cross every bridge exactly once? Count the bridges at each island before you answer."'],
+      [3, 'Chapter 2: The Odd Islands', '"An island with an odd number of bridges," the mayor whispers, "must be where the parade starts or ends. If it is not, the parade gets stranded there."'],
+      [8, 'Chapter 3: Don\'t Burn Your Bridges', 'The parade leader keeps getting stuck. Never cross the last bridge back to unexplored islands too early!'],
+      [15, 'Chapter 4: The Grand Parade', 'Lanterns float across the water as the parade crosses every bridge exactly once. The islanders name a bridge after you.']] }
+};
+const RANKS = [[0, 'Apprentice'], [100, 'Pathfinder'], [250, 'Tree Whisperer'], [500, 'Graph Ranger'], [900, 'Grand Cartographer'], [1500, 'Legend of Nodeland']];
+const BADGES = {
+  'first-light':   ['First Light', 'Solve your first puzzle'],
+  'forge-keeper':  ['Forge Keeper', 'Solve 10 Clockwork Forge puzzles'],
+  'lantern-bearer':['Lantern Bearer', 'Solve 10 Lantern Caverns puzzles'],
+  'bridge-walker': ['Bridge Walker', 'Solve 10 Bridge Isles puzzles'],
+  'explorer':      ['Explorer', 'Solve a puzzle in all three regions'],
+  'on-fire':       ['On Fire', '5 first-try solves in a row'],
+  'unstoppable':   ['Unstoppable', '10 first-try solves in a row'],
+  'never-give-up': ['Never Give Up', 'Solve a puzzle after 3 or more misses'],
+  'quick-thinker': ['Quick Thinker', 'Solve an Evaluate puzzle in under 10 seconds'],
+  'master':        ['Master', 'Reach level 4 in any region'],
+  'saboteur-hunter':['Saboteur Hunter', 'Spot 5 sabotaged engines']
+};
+const CHEERS = ['Brilliant!', 'Nailed it!', 'Spot on!', 'Wonderful!', 'You\'re a natural!', 'Exactly right!', 'Superb!'];
+const NUDGES = ['Hmm, not quite. Read the hint.', 'Close! Take another look.', 'Every expert misses sometimes.', 'Let\'s try that again.', 'Mistakes are how engines get fixed.'];
+
+const Fun = {
+  key() { return 'dmg_profile_' + (State.sid || 'anon'); },
+  p: null,
+  load() {
+    try { this.p = JSON.parse(localStorage.getItem(this.key()) || 'null'); } catch { this.p = null; }
+    if (!this.p) this.p = { avatar: '', xp: 0, coins: 0, badges: [], solved: { expr: 0, bfsdfs: 0, euler: 0 }, streak: 0, best: 0, seen: [], spot: 0 };
+    return this.p;
+  },
+  save() { try { localStorage.setItem(this.key(), JSON.stringify(this.p)); } catch { } },
+  rank(xp = this.p.xp) { let r = RANKS[0], next = null; for (const x of RANKS) { if (xp >= x[0]) r = x; else { next = x; break; } } return { name: r[1], at: r[0], next }; },
+  award(id) {
+    if (this.p.badges.includes(id)) return;
+    this.p.badges.push(id); this.p.coins += 10; this.save();
+    Log.add({ kind: 'badge', detail: id });
+    toast(h('div', { class: 'toastin' }, h('div', { class: 'medal' }, '★'), h('div', {}, h('b', {}, 'Badge earned: ' + BADGES[id][0]), h('div', { class: 'small' }, BADGES[id][1] + ' · +10 coins'))));
+  },
+  onMiss() {
+    if (!this.p) return; this.p.streak = 0; this.save();
+    companion('sad', pick(NUDGES)); renderStats();
+  },
+  onSolve(T, ms) {
+    if (!this.p) return;
+    const p = this.p, before = this.rank().name, firstTry = T.errors === 0;
+    const gain = 10 + (firstTry ? 5 : 0) + Math.min(p.streak, 5) * 2 + (T.level - 1) * 3;
+    p.xp += gain; p.coins += firstTry ? 3 : 1;
+    p.solved[T.game] = (p.solved[T.game] || 0) + 1;
+    if (firstTry) { p.streak++; p.best = Math.max(p.best, p.streak); } else p.streak = 0;
+    if (T.game === 'expr' && T.mode === 'spot') p.spot = (p.spot || 0) + 1;
+    this.save();
+    confetti(); floatText('+' + gain + ' XP');
+    companion('happy', pick(CHEERS) + (p.streak >= 3 ? ` ${p.streak} in a row!` : ''));
+    const s = p.solved;
+    this.award('first-light');
+    if (s.expr >= 10) this.award('forge-keeper');
+    if (s.bfsdfs >= 10) this.award('lantern-bearer');
+    if (s.euler >= 10) this.award('bridge-walker');
+    if (s.expr && s.bfsdfs && s.euler) this.award('explorer');
+    if (p.streak >= 5) this.award('on-fire');
+    if (p.streak >= 10) this.award('unstoppable');
+    if (T.errors >= 3) this.award('never-give-up');
+    if (T.game === 'expr' && T.mode === 'evaluate' && ms < 10000) this.award('quick-thinker');
+    if (Object.values(State.levels).some(v => v >= 4)) this.award('master');
+    if ((p.spot || 0) >= 5) this.award('saboteur-hunter');
+    const after = this.rank().name;
+    if (after !== before) setTimeout(() => storyCard('New rank: ' + after, `Your companion beams with pride. The people of Nodeland now call you "${after}".`, 'wow'), 900);
+    renderStats();
+    this.checkChapter(T.game);
+  },
+  checkChapter(g) {
+    const R = REGIONS[g]; if (!R || !this.p) return;
+    const n = this.p.solved[g] || 0;
+    for (const [at, title, text] of R.chapters) {
+      const id = g + ':' + at;
+      if (n >= at && !this.p.seen.includes(id)) { this.p.seen.push(id); this.save(); setTimeout(() => storyCard(R.icon + ' ' + title, text, 'happy'), at ? 1200 : 0); break; }
+    }
+  }
+};
+function regionChapter(g) { const n = (Fun.p && Fun.p.solved[g]) || 0; let c = REGIONS[g].chapters[0]; for (const x of REGIONS[g].chapters) if (n >= x[0]) c = x; return { title: c[1], n, max: REGIONS[g].chapters.at(-1)[0] }; }
+
+/* ----- presentation helpers ----- */
+function companion(mood, text) {
+  if (!Fun.p || !Fun.p.avatar) return;
+  let el = $('#companion');
+  if (!el) { el = h('div', { id: 'companion' }); document.body.append(el); }
+  el.replaceChildren(h('div', { class: 'bubble' }, text), avatarSVG(Fun.p.avatar, mood, 72));
+  el.classList.remove('bounce'); void el.offsetWidth; el.classList.add('bounce');
+}
+function hideCompanion() { const el = $('#companion'); if (el) el.remove(); }
+function toast(content) {
+  let box = $('#toasts'); if (!box) { box = h('div', { id: 'toasts' }); document.body.append(box); }
+  const t = h('div', { class: 'toast' }, content); box.append(t); setTimeout(() => t.classList.add('out'), 3200); setTimeout(() => t.remove(), 3800);
+}
+function floatText(txt) { const f = h('div', { class: 'floatxp' }, txt); document.body.append(f); setTimeout(() => f.remove(), 1400); }
+function confetti() {
+  const colors = ['#f39c12', '#3456d1', '#1f8a4c', '#e74c3c', '#9b59b6', '#f1c40f'];
+  const box = h('div', { class: 'confetti' });
+  for (let i = 0; i < 40; i++) box.append(h('i', { style: `left:${Math.random() * 100}%;background:${pick(colors)};animation-delay:${Math.random() * .3}s;animation-duration:${1 + Math.random()}s;transform:rotate(${ri(0, 360)}deg)` }));
+  document.body.append(box); setTimeout(() => box.remove(), 2200);
+}
+function storyCard(title, text, mood) {
+  const close = () => ov.remove();
+  const ov = h('div', { class: 'overlay', onclick: e => { if (e.target === ov) close(); } },
+    h('div', { class: 'story' }, Fun.p && Fun.p.avatar ? avatarSVG(Fun.p.avatar, mood || 'happy', 90) : '', h('h2', {}, title), h('p', {}, text), h('button', { class: 'btn', onclick: close }, 'Continue')));
+  document.body.append(ov); setTimeout(() => ov.querySelector('button').focus(), 50);
+}
+function renderStats() {
+  const el = $('#stats'); if (!el) return;
+  if (!State.sid || !Fun.p || !Fun.p.avatar) { el.replaceChildren(); return; }
+  const r = Fun.rank(), p = Fun.p, pct = r.next ? Math.round(100 * (p.xp - r.at) / (r.next[0] - r.at)) : 100;
+  el.replaceChildren(avatarSVG(p.avatar, 'happy', 34), h('div', {}, h('div', { class: 'rk' }, r.name, ' · ', p.xp, ' XP'), h('div', { class: 'xpbar' }, h('i', { style: `width:${pct}%` }))),
+    h('span', { class: 'coin' }, '● ', p.coins), p.streak >= 2 ? h('span', { class: 'flame' }, '🔥 ', p.streak) : '');
+}
+function regionBanner(g) {
+  const R = REGIONS[g], c = regionChapter(g);
+  return h('div', { class: 'banner', style: `--rc:${R.color}` },
+    h('div', { class: 'bicon' }, R.icon),
+    h('div', { style: 'flex:1' }, h('div', { class: 'btitle' }, R.name), h('div', { class: 'bsub' }, c.title + ' · ' + R.blurb),
+      h('div', { class: 'xpbar wide' }, h('i', { style: `width:${Math.min(100, Math.round(100 * c.n / c.max))}%;background:${R.color}` })),
+      h('div', { class: 'small' }, `Restoration: ${Math.min(c.n, c.max)} of ${c.max} puzzles`)));
+}
+function avatarPicker(onPick, current) {
+  return h('div', { class: 'avatars' }, Object.entries(AVATARS).map(([id, A]) => h('button', { class: 'avbtn' + (current === id ? ' on' : ''), title: A.name, onclick: () => onPick(id) }, avatarSVG(id, 'happy', 64), h('div', { class: 'small' }, A.name.split(' ')[0]))));
 }
 
 /* ---------- boot ---------- */
